@@ -1,4 +1,5 @@
 using gestion_commande.Models;
+using gestion_commande.Data;
 using gestion_commande.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,9 +12,12 @@ namespace gestion_commande.Controllers
     {
         private readonly IClientService _clientService;
         private readonly ICommandeService _commandeService;
+        private readonly ApplicationDbContext _context;
 
-        public ClientController(IClientService clientService, ICommandeService commandeService)
+
+        public ClientController(ApplicationDbContext context,IClientService clientService, ICommandeService commandeService)
         {
+            _context = context;
             _clientService = clientService;
             _commandeService = commandeService;
         }
@@ -25,6 +29,7 @@ namespace gestion_commande.Controllers
             // Pass the clients to the view
             return View(clients);
         }
+        
         // Action pour afficher le formulaire de création d'un client
         [HttpGet]
         public IActionResult FormClient()
@@ -32,22 +37,23 @@ namespace gestion_commande.Controllers
             return View();
         }
 
-        // Action pour ajouter un client
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> FormClient([Bind("Email,Login,Telephone,Address,Password")] Client client)
+        public async Task<IActionResult> FormClient(User user)
         {
             if (ModelState.IsValid)
             {
-                var clientAdded = await _clientService.Create(client);
-                if (clientAdded != null)
-                {
-                    TempData["Message"] = "Client créé avec succès!";
-                    return RedirectToAction(nameof(Index));  
-                }
-              
+                // Logique pour créer l'utilisateur et le client
+                var client = new Client();
+                user.Client = client;
+
+                _context.Users.Add(user);
+                await _context.SaveChangesAsync();
+
+                return RedirectToAction("SuccessPage");
             }
-            return View(client);
+
+            // En cas d'erreur, retourner à la même vue avec les messages de validation
+            return View(user);
         }
 
         // Action pour afficher les détails d'un client
@@ -103,29 +109,29 @@ namespace gestion_commande.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        [HttpGet]
-        public IActionResult FormClientVal()
-        {
-            return View();
-        }
-        // Action pour valider les informations d'un client
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> FormClientVal(string Username, string Telephone)
-        {
-            if (ModelState.IsValid)
-            {
-                var client = await _clientService.FindByUsernameAndTelephone(Username, Telephone);
-                if (client != null)
-                {
-                    return RedirectToAction("FormCommande", new { clientId = client.Id });
-                }
-                else
-                {
-                    ModelState.AddModelError("", "Client non trouvé. Veuillez vérifier les informations.");
-                }
-            }
-            return View();
-        }
+        // [HttpGet]
+        // public IActionResult FormClientVal()
+        // {
+        //     return View();
+        // }
+        // // Action pour valider les informations d'un client
+        // [HttpPost]
+        // [ValidateAntiForgeryToken]
+        // public async Task<IActionResult> FormClientVal()
+        // {
+        //     if (ModelState.IsValid)
+        //     {
+        //         var client = await _clientService.FindByUsernameAndTelephone(Username, Telephone);
+        //         if (client != null)
+        //         {
+        //             return RedirectToAction("FormCommande", new { clientId = client.Id });
+        //         }
+        //         else
+        //         {
+        //             ModelState.AddModelError("", "Client non trouvé. Veuillez vérifier les informations.");
+        //         }
+        //     }
+        //     return View();
+        // }
     }
 }

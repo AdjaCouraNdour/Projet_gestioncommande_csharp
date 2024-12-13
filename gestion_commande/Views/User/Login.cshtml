@@ -23,10 +23,10 @@
             </div>
         }
 
-        <form asp-action="Login" asp-controller="Authentification" method="post" class="space-y-4">
+        <form asp-action="Login" asp-controller="User" method="post" class="space-y-4">
             <div class="flex flex-col">
-                <label for="Username" class="text-semibold font-semibold text-gray-700">Username :</label>
-                <input type="text" id="Username" name="Username" required class="mt-1 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-bleugris w-full max-w-xs" />
+                <label for="Login" class="text-semibold font-semibold text-gray-700">Login :</label>
+                <input type="text" id="Login" name="Login" required class="mt-1 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-bleugris w-full max-w-xs" />
             </div>
 
             <div class="flex flex-col">
@@ -40,7 +40,7 @@
         </form>
 
         <div class="mt-4 text-center text-sm text-gray-600">
-            <p>Vous n'avez pas de compte ? <a href="/Client/FormClient" class="text-white font-medium hover:text-blue-600">Inscrivez-vous</a></p>
+            <p>Vous n'avez pas de compte ? <a href="/User/Create" class="text-white font-medium hover:text-blue-600">Inscrivez-vous</a></p>
         </div>
     </div>
 </body>

@@ -25,11 +25,6 @@ namespace gestion_commande.Models
         [StringLength(50, ErrorMessage = "L'email doit avoir au maximum 20 caractères")]
         public string Email { get; set; } = string.Empty;
 
-        [Required(ErrorMessage = "Le Username est obligatoire")]
-        [StringLength(20, ErrorMessage = "Le Username doit avoir au maximum 20 caractères")]
-        [UniqueUsername(ErrorMessage = "Le Username est deja utulisé")]
-        public string Username { get; set; }
-
         [UniqueTelephone(ErrorMessage="le telephone doit etre unique")]
         [Required(ErrorMessage = "Le telephone est obligatoire")]
         [RegularExpression(@"^(77|78|76)[0-9]{7}$",ErrorMessage = "Le telephone doit etrre sous forme 77xxxxxxx ou 78xxxxxxx ou 76xxxxxxx")]
@@ -38,6 +33,8 @@ namespace gestion_commande.Models
         [Required(ErrorMessage = "Le password est obligatoire")]
         public string Password { get; set; } = string.Empty;
 
+        public Client? Client { get; set; }
+        public int? ClientId { get; set; }
         public UserRole UserRole { get; set; }
         public string Address { get; set; }
      

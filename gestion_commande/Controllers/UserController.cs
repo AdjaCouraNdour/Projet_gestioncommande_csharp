@@ -3,6 +3,7 @@ using gestion_commande.Enums;
 using gestion_commande.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using gestion_commande.Data;
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -12,17 +13,45 @@ namespace gestion_commande.Controllers
 {
     public class UserController : Controller
     {
+        private readonly ApplicationDbContext _context;
+
         private readonly IUserService _userService;
     
-        public UserController(IUserService userService)
+        public UserController(IUserService userService,ApplicationDbContext context)
         {
             _userService = userService;
+            _context = context;
+        }
+        
+        [HttpGet]
+        public IActionResult Login()
+        {
+            return View();
         }
 
-          public IActionResult Login()
+        [HttpPost]
+      public IActionResult Login(string login, string password)
         {
-            return View(); // Affiche une vue d'accueil ou tableau de bord
+            if (string.IsNullOrEmpty(login) || string.IsNullOrEmpty(password))
+            {
+                ViewBag.Message = "Veuillez remplir tous les champs.";
+                return View();
+            }
+            var user = _context.Users.FirstOrDefault(u => u.Login == login && u.Password == password);
+            if (user != null)
+            {
+                ViewBag.Message = "Connexion réussie !";
+                return RedirectToAction("Index", "Produit"); // Redirection vers une autre page
+            }
+            else
+            {
+                ViewBag.Message = "Nom d'utilisateur ou mot de passe incorrect.";
+                return View();
+            }
         }
+        
+
+        
         public async Task<IActionResult> Index(int page = 1, int pageSize = 3)
         {
             // Fetch users from the service
@@ -31,7 +60,7 @@ namespace gestion_commande.Controllers
             return View(users);
         }
 
-         [HttpGet]
+     
         public IActionResult FormUser()
         {
             ViewBag.UserRoles = GetRolesAsSelectList();
@@ -40,7 +69,7 @@ namespace gestion_commande.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> FormUser([Bind("Id,Nom,Prenom,Telephone.Address,Login,Password,UserRole")] User user)
+        public async Task<IActionResult> FormUser([Bind("Email,Login,Telephone,Address,Password")] User user)
         {
             if (ModelState.IsValid)
             {
@@ -52,6 +81,32 @@ namespace gestion_commande.Controllers
             return View(user);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Create(User user)
+        {
+            if (ModelState.IsValid)
+            {
+                user.UserRole = UserRole.Client;
+                // Créer le client associé à l'utilisateur
+                var client = new Client
+                {
+                    User = user // Associer le client à l'utilisateur
+                };
+
+                // Ajouter l'utilisateur et le client dans le contexte
+                _context.Users.Add(user);
+                _context.Clients.Add(client);
+                 user.ClientId = client.Id; 
+                // Sauvegarder dans la base de données
+                await _context.SaveChangesAsync();
+
+                return RedirectToAction("Index", "Home"); // Redirection après création
+            }
+
+            return View(user); // Si la validation échoue, retourner à la même vue
+        }
+
+       
         public SelectList GetRolesAsSelectList()
         {
             // Convertit l'énumération en une liste de paires valeur-texte
@@ -81,19 +136,6 @@ namespace gestion_commande.Controllers
         public IActionResult Create()
         {
             return View();
-        }
-
-        // Action pour enregistrer un user (POST)
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(User user)
-        {
-            if (ModelState.IsValid)
-            {
-                await _userService.Create(user);
-                return RedirectToAction(nameof(Index)); // Rediriger vers la liste des users après enregistrement
-            }
-            return View(user); // Retourner la vue avec le formulaire si la validation échoue
         }
 
         // Action pour afficher le formulaire d'édition d'un user

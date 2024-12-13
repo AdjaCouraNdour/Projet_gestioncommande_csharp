@@ -21,7 +21,9 @@ namespace gestion_commande.Services
         
         public IEnumerable<Client> GetClients()
         {
-            return _context.Clients.ToList();
+            return _context.Clients
+                   .Include(c => c.User) // Inclure les données de l'utilisateur associé
+                   .ToList();
         }
         // Implémentation de la méthode Delete
         public async Task Delete(int id)
@@ -47,11 +49,11 @@ namespace gestion_commande.Services
         }
 
         // Implémentation de la méthode FindByTelephone
-        public async Task<Client> FindByTelephone(string telephone)
-        {
-            return await _context.Clients
-                .FirstOrDefaultAsync(c => c.Telephone == telephone);
-        }
+        // public async Task<Client> FindByTelephone(string telephone)
+        // {
+        //     return await _context.Clients
+        //         .FirstOrDefaultAsync(c => c.Telephone == telephone);
+        // }
 
         // Implémentation de la méthode Save
         public async Task Save(Client data)
@@ -77,11 +79,11 @@ namespace gestion_commande.Services
             return client;
         }
 
-        public async Task<Client> FindByUsernameAndTelephone(string login, string telephone)
-        {
-            return await _context.Clients
-                         .FirstOrDefaultAsync(c => c.Login == login && c.Telephone == telephone);   
-        }
+        // public async Task<Client> FindByUsernameAndTelephone(string login, string telephone)
+        // {
+        //     return await _context.Clients
+        //                  .FirstOrDefaultAsync(c => c.Login == login && c.Telephone == telephone);   
+        // }
 
 
     public async Task<PaginationModel<Client>> GetClientsByPaginate(int page, int pageSize)

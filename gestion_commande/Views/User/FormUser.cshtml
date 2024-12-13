@@ -13,31 +13,38 @@
         <form asp-action="FormUser" method="post">
             @Html.AntiForgeryToken()
 
-            <div class="mb-4">
+            <div class="mb-2">
                 <label for="Login" class="block text-black text-sm font-bold mb-2" asp-for="Login">Login</label>
                 <input type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring focus:border-blue-500" asp-for="Login" />
                 <span class="text-red-500 text-xs italic" asp-validation-for="Login"></span>
             </div>
 
-            <div class="mb-4">
+            <div class="mb-2">
                 <label for="Email" class="block text-black text-sm font-bold mb-2" asp-for="Email">Email</label>
                 <input type="email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring focus:border-blue-500" asp-for="Email" />
                 <span class="text-red-500 text-xs italic" asp-validation-for="Email"></span>
             </div>
-
-            <div class="mb-4">
+            <div class="mb-2">
+                <label for="Telephone" class="block text-black text-sm font-bold mb-2">Téléphone</label>
+                <input type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring focus:border-blue-500" asp-for="Telephone" />
+                <span class="text-red-500 text-xs italic" asp-validation-for="Telephone"></span>
+            </div>
+                <div class="mb-2">
+                <label for="Address" class="block text-black text-sm font-bold mb-2" asp-for="Address">Addresse</label>
+                <input type="Address" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring focus:border-blue-500" asp-for="Address" />
+                <span class="text-red-500 text-xs italic" asp-validation-for="Address"></span>
+            </div>
+            <div class="mb-2">
                 <label for="Password" class="block text-black text-sm font-bold mb-2" asp-for="Password">Mot de Passe</label>
                 <input type="password" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring focus:border-blue-500" asp-for="Password" />
                 <span class="text-red-500 text-xs italic" asp-validation-for="Password"></span>
             </div>
-
-            <div class="mb-4">
+            <div class="mb-2">
                 <label for="UserRole" class="block text-black text-sm font-bold mb-2" asp-for="UserRole">Rôle</label>
                 <select class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring focus:border-blue-500" asp-for="UserRole" asp-items="ViewBag.UserRoles">
                 </select>
                 <span class="text-red-500 text-xs italic" asp-validation-for="UserRole"></span>
             </div>
-         
 
             <div class="flex justify-end">
                 <button class="bg-bleugris text-white font-bold py-2 px-4 rounded hover:bg-gray-700 focus:outline-none focus:ring focus:ring-gray-400" type="submit">Soumettre</button>

@@ -5,10 +5,10 @@
 <div class="container mx-auto p-6 bg-white rounded-lg shadow-md">
     <div class="space-y-4 mb-4">
         <p><strong class="font-semibold text-gray-700">Id :</strong> @Model.Id</p>
-        <p><strong class="font-semibold text-gray-700">Email :</strong> @Model.Email</p>
-        <p><strong class="font-semibold text-gray-700">Login/Username :</strong> @Model.Login</p>
-        <p><strong class="font-semibold text-gray-700">Téléphone :</strong> @Model.Telephone</p>
-        <p><strong class="font-semibold text-gray-700">Adresse :</strong> @Model.Address</p>
+        <p><strong class="font-semibold text-gray-700">Email :</strong> @Model.User.Email</p>
+        <p><strong class="font-semibold text-gray-700">Login/Username :</strong> @Model.User.Login</p>
+        <p><strong class="font-semibold text-gray-700">Téléphone :</strong> @Model.User.Telephone</p>
+        <p><strong class="font-semibold text-gray-700">Adresse :</strong> @Model.User.Address</p>
         <p><strong class="font-semibold text-gray-700">Date de création :</strong> @Model.CreateAt</p>
         <p><strong class="font-semibold text-gray-700 ">Date de mise à jour :</strong> @Model.UpdateAt</p>
     </div>

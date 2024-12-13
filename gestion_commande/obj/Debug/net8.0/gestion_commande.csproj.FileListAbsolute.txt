@@ -168,3 +168,4 @@ C:\Users\KIKI\Documents\ISM L3\exam\C#\gestion_commande\bin\Debug\net8.0\runtime
 C:\Users\KIKI\Documents\ISM L3\exam\C#\gestion_commande\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\KIKI\Documents\ISM L3\exam\C#\gestion_commande\bin\Debug\net8.0\runtimes\browser\lib\net8.0\System.Text.Encodings.Web.dll
 C:\Users\KIKI\Documents\ISM L3\exam\C#\gestion_commande\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
+C:\Users\KIKI\Documents\ISM L3\exam\C#\gestion_commande\obj\Debug\net8.0\gestion_commande.sourcelink.json

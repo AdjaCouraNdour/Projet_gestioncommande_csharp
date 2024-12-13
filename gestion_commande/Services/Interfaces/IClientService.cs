@@ -6,9 +6,9 @@ namespace gestion_commande.Services.Interfaces
 {
     public interface IClientService : IService<Client>
     {
-        Task<Client> FindByTelephone(string telephone);
+        // Task<Client> FindByTelephone(string telephone);
         IEnumerable<Client> GetClients();
-        Task<Client> FindByUsernameAndTelephone(string username, string telephone);
+        // Task<Client> FindByUsernameAndTelephone(string username, string telephone);
         Task<PaginationModel<Client>> GetClientsByPaginate(int page, int pageSize);
 
     }

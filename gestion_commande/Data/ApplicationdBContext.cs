@@ -28,56 +28,59 @@ namespace gestion_commande.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-        // Relation 1:1 entre Client et User
-            // modelBuilder.Entity<User>()
-            //     .HasOne(u => u.Client)
-            //     .WithOne(c => c.User)
-            //     .HasForeignKey<Client>(c => c.UserId)
-            //     .OnDelete(DeleteBehavior.Cascade)
-            //     .IsRequired(false);
+            modelBuilder.Entity<User>()
+                .HasOne(u => u.Client)
+                .WithOne(c => c.User)
+                .HasForeignKey<Client>(c => c.UserId)
+                .OnDelete(DeleteBehavior.Cascade)
+                .IsRequired(false);
 
-            // // Relation 1:N entre Client et Commande
-            // modelBuilder.Entity<Commande>()
-            //     .HasOne(d => d.Client)
-            //     .WithMany(c => c.Commandes)
-            //     .HasForeignKey(d => d.ClientId) 
-            //     .OnDelete(DeleteBehavior.Cascade);
+           modelBuilder.Entity<Client>()
+                .HasOne(c => c.User) 
+                .WithOne(u => u.Client)
+                .HasForeignKey<Client>(c => c.UserId)
+                .OnDelete(DeleteBehavior.Cascade)
+                .IsRequired(false);
 
-            // // Relation N:1 entre Client et Commande
-            // modelBuilder.Entity<Commande>()
-            //     .HasMany(d => d.Details)
-            //     .WithOne(de => de.Commande)
-            //     .HasForeignKey(de => de.CommandeId) 
-            //     .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<Commande>()
+                .HasOne(d => d.Client)
+                .WithMany(c => c.Commandes)
+                .HasForeignKey(d => d.ClientId) 
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Commande>()
+                .HasMany(d => d.Details)
+                .WithOne(de => de.Commande)
+                .HasForeignKey(de => de.CommandeId) 
+                .OnDelete(DeleteBehavior.Cascade);
             
-            // modelBuilder.Entity<Commande>()
-            //     .HasMany(d => d.Paiements)
-            //     .WithOne(p => p.Commande)
-            //     .HasForeignKey(p => p.CommandeId) 
-            //     .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<Commande>()
+                .HasMany(d => d.Paiements)
+                .WithOne(p => p.Commande)
+                .HasForeignKey(p => p.CommandeId) 
+                .OnDelete(DeleteBehavior.Cascade);
 
-            // modelBuilder.Entity<Produit>()
-            //     .HasMany(a => a.Details)
-            //     .WithOne(de => de.Produit)
-            //     .HasForeignKey(de => de.ProduitId) 
-            //     .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<Produit>()
+                .HasMany(a => a.Details)
+                .WithOne(de => de.Produit)
+                .HasForeignKey(de => de.ProduitId) 
+                .OnDelete(DeleteBehavior.Cascade);
 
-            // modelBuilder.Entity<ProduitCommande>()
-            //     .HasKey(e => new {
-            //         e.ProduitId,
-            //         e.CommandeId
-            //     });
+            modelBuilder.Entity<ProduitCommande>()
+                .HasKey(e => new {
+                    e.ProduitId,
+                    e.CommandeId
+                });
 
-            // modelBuilder.Entity<ProduitCommande>()
-            //     .HasOne(ad => ad.Produit)
-            //     .WithMany(a => a.ProduitsCommande)
-            //     // Associer la clé étrangère à la colonne CommandeId dans la table ProduitCommandes
-            //     .HasForeignKey(ad => ad.ProduitId);  // Associer la clé étrangère à la colonne ProduitId dans la table ProduitCommandes
+            modelBuilder.Entity<ProduitCommande>()
+                .HasOne(ad => ad.Produit)
+                .WithMany(a => a.ProduitsCommande)
+                .HasForeignKey(ad => ad.ProduitId);  // Associer la clé étrangère à la colonne ProduitId dans la table ProduitCommandes
 
-            // modelBuilder.Entity<ProduitCommande>()
-            //     .HasOne(ad => ad.Commande)
-            //     .WithMany(a => a.ProduitsCommande)
-            //     .HasForeignKey(ad => ad.CommandeId);
+            modelBuilder.Entity<ProduitCommande>()
+                .HasOne(ad => ad.Commande)
+                .WithMany(a => a.ProduitsCommande)
+                .HasForeignKey(ad => ad.CommandeId);
 
             // // Ajout des fixtures
             // modelBuilder.Entity<Client>().HasData(ClientFixture.GetClients().ToArray());

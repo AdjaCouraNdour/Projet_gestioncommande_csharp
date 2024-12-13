@@ -12,8 +12,8 @@ using gestion_commande.Data;
 namespace gestion_commande.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241211181838_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20241213170115_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,46 +33,20 @@ namespace gestion_commande.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<bool>("Actif")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("CreateAt")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Login")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Telephone")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("UpdateAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("UserRole")
+                    b.Property<int?>("UserId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique()
+                        .HasFilter("[UserId] IS NOT NULL");
 
                     b.ToTable("Clients");
                 });
@@ -85,11 +59,26 @@ namespace gestion_commande.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("ClientId")
+                    b.Property<int>("ClientId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreateAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("EtatCommande")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Montant")
+                        .HasColumnType("float");
+
+                    b.Property<double>("MontantRestant")
+                        .HasColumnType("float");
+
+                    b.Property<double>("MontantVerse")
+                        .HasColumnType("float");
 
                     b.Property<DateTime>("UpdateAt")
                         .HasColumnType("datetime2");
@@ -98,26 +87,7 @@ namespace gestion_commande.Migrations
 
                     b.HasIndex("ClientId");
 
-                    b.ToTable("Commande");
-                });
-
-            modelBuilder.Entity("gestion_commande.Models.Comptable", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreateAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("UpdateAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Comptables");
+                    b.ToTable("Commandes");
                 });
 
             modelBuilder.Entity("gestion_commande.Models.Detail", b =>
@@ -128,15 +98,86 @@ namespace gestion_commande.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("CommandeId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("CreateAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("ProduitId")
+                        .HasColumnType("int");
+
+                    b.Property<double>("QteCommande")
+                        .HasColumnType("float");
 
                     b.Property<DateTime>("UpdateAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CommandeId");
+
+                    b.HasIndex("ProduitId");
+
                     b.ToTable("Details");
+                });
+
+            modelBuilder.Entity("gestion_commande.Models.Livreur", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreateAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("NomComplet")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Telephone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdateAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Livreurs");
+                });
+
+            modelBuilder.Entity("gestion_commande.Models.Paiement", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CommandeId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreateAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double>("Montant")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("UpdateAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CommandeId");
+
+                    b.ToTable("Paiements");
                 });
 
             modelBuilder.Entity("gestion_commande.Models.Produit", b =>
@@ -150,6 +191,19 @@ namespace gestion_commande.Migrations
                     b.Property<DateTime>("CreateAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("EtatProduit")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Libelle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Prix")
+                        .HasColumnType("int");
+
+                    b.Property<double>("QteStock")
+                        .HasColumnType("float");
+
                     b.Property<DateTime>("UpdateAt")
                         .HasColumnType("datetime2");
 
@@ -160,69 +214,26 @@ namespace gestion_commande.Migrations
 
             modelBuilder.Entity("gestion_commande.Models.ProduitCommande", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("ProduitId")
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
                     b.Property<int>("CommandeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Id")
                         .HasColumnType("int");
 
                     b.Property<int>("PrixUnitaire")
                         .HasColumnType("int");
 
-                    b.Property<int>("ProduitId")
-                        .HasColumnType("int");
-
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("ProduitId", "CommandeId");
 
                     b.HasIndex("CommandeId");
 
-                    b.HasIndex("ProduitId");
-
                     b.ToTable("ProduitsCommandes");
-                });
-
-            modelBuilder.Entity("gestion_commande.Models.Rs", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreateAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("UpdateAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Rss");
-                });
-
-            modelBuilder.Entity("gestion_commande.Models.Secretaire", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreateAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("UpdateAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Secretaires");
                 });
 
             modelBuilder.Entity("gestion_commande.Models.User", b =>
@@ -267,35 +278,42 @@ namespace gestion_commande.Migrations
                     b.Property<int>("UserRole")
                         .HasColumnType("int");
 
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("ClientId");
 
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("gestion_commande.Models.Commande", b =>
+            modelBuilder.Entity("gestion_commande.Models.Client", b =>
                 {
-                    b.HasOne("gestion_commande.Models.Client", null)
-                        .WithMany("Commandes")
-                        .HasForeignKey("ClientId");
+                    b.HasOne("gestion_commande.Models.User", "User")
+                        .WithOne("Client")
+                        .HasForeignKey("gestion_commande.Models.Client", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("User");
                 });
 
-            modelBuilder.Entity("gestion_commande.Models.ProduitCommande", b =>
+            modelBuilder.Entity("gestion_commande.Models.Commande", b =>
+                {
+                    b.HasOne("gestion_commande.Models.Client", "Client")
+                        .WithMany("Commandes")
+                        .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Client");
+                });
+
+            modelBuilder.Entity("gestion_commande.Models.Detail", b =>
                 {
                     b.HasOne("gestion_commande.Models.Commande", "Commande")
-                        .WithMany()
+                        .WithMany("Details")
                         .HasForeignKey("CommandeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("gestion_commande.Models.Produit", "Produit")
-                        .WithMany()
+                        .WithMany("Details")
                         .HasForeignKey("ProduitId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -305,18 +323,60 @@ namespace gestion_commande.Migrations
                     b.Navigation("Produit");
                 });
 
-            modelBuilder.Entity("gestion_commande.Models.User", b =>
+            modelBuilder.Entity("gestion_commande.Models.Paiement", b =>
                 {
-                    b.HasOne("gestion_commande.Models.Client", "client")
-                        .WithMany()
-                        .HasForeignKey("ClientId");
+                    b.HasOne("gestion_commande.Models.Commande", "Commande")
+                        .WithMany("Paiements")
+                        .HasForeignKey("CommandeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("client");
+                    b.Navigation("Commande");
+                });
+
+            modelBuilder.Entity("gestion_commande.Models.ProduitCommande", b =>
+                {
+                    b.HasOne("gestion_commande.Models.Commande", "Commande")
+                        .WithMany("ProduitsCommande")
+                        .HasForeignKey("CommandeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("gestion_commande.Models.Produit", "Produit")
+                        .WithMany("ProduitsCommande")
+                        .HasForeignKey("ProduitId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Commande");
+
+                    b.Navigation("Produit");
                 });
 
             modelBuilder.Entity("gestion_commande.Models.Client", b =>
                 {
                     b.Navigation("Commandes");
+                });
+
+            modelBuilder.Entity("gestion_commande.Models.Commande", b =>
+                {
+                    b.Navigation("Details");
+
+                    b.Navigation("Paiements");
+
+                    b.Navigation("ProduitsCommande");
+                });
+
+            modelBuilder.Entity("gestion_commande.Models.Produit", b =>
+                {
+                    b.Navigation("Details");
+
+                    b.Navigation("ProduitsCommande");
+                });
+
+            modelBuilder.Entity("gestion_commande.Models.User", b =>
+                {
+                    b.Navigation("Client");
                 });
 #pragma warning restore 612, 618
         }

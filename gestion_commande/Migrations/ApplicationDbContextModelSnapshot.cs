@@ -30,38 +30,20 @@ namespace gestion_commande.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("CreateAt")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Login")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Telephone")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("UpdateAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("UserRole")
+                    b.Property<int?>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique()
+                        .HasFilter("[UserId] IS NOT NULL");
 
                     b.ToTable("Clients");
                 });
@@ -229,29 +211,24 @@ namespace gestion_commande.Migrations
 
             modelBuilder.Entity("gestion_commande.Models.ProduitCommande", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("ProduitId")
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
                     b.Property<int>("CommandeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Id")
                         .HasColumnType("int");
 
                     b.Property<int>("PrixUnitaire")
                         .HasColumnType("int");
 
-                    b.Property<int>("ProduitId")
-                        .HasColumnType("int");
-
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("ProduitId", "CommandeId");
 
                     b.HasIndex("CommandeId");
-
-                    b.HasIndex("ProduitId");
 
                     b.ToTable("ProduitsCommandes");
                 });
@@ -267,6 +244,9 @@ namespace gestion_commande.Migrations
                     b.Property<string>("Address")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ClientId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreateAt")
                         .HasColumnType("datetime2");
@@ -295,14 +275,19 @@ namespace gestion_commande.Migrations
                     b.Property<int>("UserRole")
                         .HasColumnType("int");
 
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("gestion_commande.Models.Client", b =>
+                {
+                    b.HasOne("gestion_commande.Models.User", "User")
+                        .WithOne("Client")
+                        .HasForeignKey("gestion_commande.Models.Client", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("gestion_commande.Models.Commande", b =>
@@ -384,6 +369,11 @@ namespace gestion_commande.Migrations
                     b.Navigation("Details");
 
                     b.Navigation("ProduitsCommande");
+                });
+
+            modelBuilder.Entity("gestion_commande.Models.User", b =>
+                {
+                    b.Navigation("Client");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,0 +1,35 @@
+@using gestion_commande.Models
+@model Produit
+
+@{
+    ViewData["Title"] = "Ajout Produit";
+}
+
+<div class="max-w-md mx-auto bg-white shadow-md rounded-lg">
+    <div class="bg-gray-800 text-white text-lg font-bold p-4 rounded-t-lg">Création Produit</div>
+    <div class="p-6">
+
+        <form asp-action="FormProduit"  method="post">
+            <div class="mb-4">
+                <label for="Libelle" class="block text-black text-sm font-bold mb-2" asp-for="Libelle">Libelle</label>
+                <input type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring focus:border-blue-500" asp-for="Libelle" id="" />
+                <span class="text-red-500 text-xs italic" asp-validation-for="Libelle"></span>
+            </div>
+
+            <div class="mb-4">
+                <label for="Prix" class="block text-black text-sm font-bold mb-2" asp-for="Prix">Prix</label>
+                <input type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring focus:border-blue-500" asp-for="Prix" id="" />
+                <span class="text-red-500 text-xs italic" asp-validation-for="Prix"></span>
+            </div>
+
+            <div class="mb-4">
+                <label for="QteStock" class="block text-black text-sm font-bold mb-2" asp-for="QteStock">QteStock</label>
+                <textarea type="text" id="QteStock" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring focus:border-blue-500" asp-for="QteStock"></textarea>
+            </div>
+
+            <div class="flex justify-end">
+                <button class="bg-bleugris text-white font-bold py-2 px-4 rounded hover:bg-gray-700 focus:outline-none focus:ring focus:ring-gray-400" type="submit">Soumettre</button>
+            </div>
+        </form>
+    </div>
+</div>

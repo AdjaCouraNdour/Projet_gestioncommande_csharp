@@ -12,20 +12,20 @@
                 Liste des clients
             </div>
             <div>
-                <a class="bg-burgundy text-white text-sm px-4 py-2 rounded-lg hover:bg-red-700" asp-action="FormClient">
+                <a class="bg-bleugris text-white text-sm px-4 py-2 rounded-lg hover:bg-red-700" asp-action="FormClient">
                     + client
                 </a>
             </div>
             @if (TempData["Message"] != null)
             {
-                <div class="bg-burgundy border border-white text-white p-4 rounded-lg" role="alert">
+                <div class="bg-bleugris border border-white text-white p-4 rounded-lg" role="alert">
                     <p class="mb-2">@TempData["Message"]</p>
                 </div>
             }
         </div>
 
         <thead>
-            <tr class="bg-burgundy text-white">
+            <tr class="bg-bleugris text-white">
                 <th class="py-2 px-4 border-b text-left">Login/Username</th>
                 <th class="py-2 px-4 border-b text-left">Téléphone</th>
                 <th class="py-2 px-4 border-b text-left">Adresse</th>
@@ -36,9 +36,9 @@
             @foreach (var client in Model.Items)
             {
                 <tr class="hover:bg-gray-100">
-                    <td class="py-2 px-4 border-b">@client.Login</td>
-                    <td class="py-2 px-4 border-b">@client.Telephone</td>
-                    <td class="py-2 px-4 border-b">@client.Address</td>
+                    <td class="py-2 px-4 text-black border-b">@client.User?.Login</td>
+                    <td class="py-2 px-4 text-black border-b">@client.User?.Telephone</td>
+                    <td class="py-2 px-4 text-black border-b">@client.User?.Address</td>
                     <td class="py-2 px-4 border-b text-center">
                         <div class="flex justify-center items-center space-x-4">
                             <!-- Icône Détails -->
@@ -55,9 +55,9 @@
                                 </svg>
                             </a>
 
-                            <!-- Bouton Dettes -->
-                            <a href="@Url.Action("DettesClient", "Dette", new { clientId  = client.Id })" class="bg-burgundy text-white text-sm px-4 rounded-lg hover:bg-red-700">
-                                Dettes
+                            <!-- Bouton Commandes -->
+                            <a href="@Url.Action("CommandesClient", "Commande", new { clientId  = client.Id })" class="bg-bleugris text-white text-sm px-4 rounded-lg hover:bg-red-700">
+                                Commandes
                             </a>
                         </div>
                     </td>
@@ -80,7 +80,7 @@
                 {
                     <li>
                         <a href="@Url.Action("Index", new { page = Model.CurrentPage - 1 })"
-                        class="px-4 py-2 border bg-burgundy text-white rounded-lg hover:bg-red-700">
+                        class="px-4 py-2 border bg-bleugris text-white rounded-lg hover:bg-red-700">
                             &laquo; 
                         </a>
                     </li>
@@ -92,7 +92,7 @@
                         class="px-4 py-2 border rounded-lg 
                         @(i == Model.CurrentPage 
                             ? "bg-red-700 text-white border-red-700 hover:bg-red-800" 
-                            : "bg-white text-burgundy border-burgundy hover:bg-gray-100")">
+                            : "bg-white text-bleugris border-bleugris hover:bg-gray-100")">
                             @i
                         </a>
                     </li>
@@ -101,7 +101,7 @@
                 {
                     <li>
                         <a href="@Url.Action("Index", new { page = Model.CurrentPage + 1 })"
-                        class="px-4 py-2 border bg-burgundy text-white rounded-lg hover:bg-red-700">
+                        class="px-4 py-2 border bg-bleugris text-white rounded-lg hover:bg-red-700">
                             &raquo;
                         </a>
                     </li>

@@ -16,8 +16,7 @@
     </div>
         <thead>
             <tr class="bg-bleugris">
-                <th class="py-2 px-4 border-b text-white text-left">Username</th>
-                <th class="py-2 px-4 border-b text-white text-left">Login/Email</th>
+                <th class="py-2 px-4 border-b text-white text-left">Login/Username</th>
                 <th class="py-2 px-4 border-b text-white text-left">Telephone</th>
                 <th class="py-2 px-4 border-b text-white text-left">Adresse</th>
                 <th class="py-2 px-4 border-b text-white">Actions</th>
@@ -27,7 +26,6 @@
             @foreach (var user in Model.Items)
             {
                 <tr class="bg-nude hover:bg-gray-100">
-                    <td class="py-2 px-4 border-b">@user.Username</td>
                     <td class="py-2 px-4 border-b">@user.Login</td>
                     <td class="py-2 px-4 border-b">@user.Telephone</td>
                     <td class="py-2 px-4 border-b">@user.Address</td>

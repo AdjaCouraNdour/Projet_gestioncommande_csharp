@@ -1,5 +1,5 @@
 @using gestion_commande.Models
-@model Client
+@model User
 @{
     Layout = null;
 }
@@ -25,7 +25,7 @@
             </div>
         }
 
-        <form asp-action="FormClient"  method="post">
+        <form asp-action="Create"  method="post">
             <div class="mb-2">
                 <label for="Email" class="block text-black text-sm font-bold mb-2" asp-for="Email">Email</label>
                 <input type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring focus:border-blue-500" asp-for="Email" id="" />
