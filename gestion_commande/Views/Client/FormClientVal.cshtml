@@ -1,0 +1,32 @@
+@using gestion_commande.Models
+@model Client
+
+@{
+    ViewData["Title"] = "Vérification du Client";
+}
+
+<div class="max-w-md mx-auto bg-white shadow-md rounded-lg">
+    <div class="bg-gray-800 text-white text-lg font-bold p-4 rounded-t-lg">Vérification du Client</div>
+
+    <div class="p-6">
+        <form asp-action="FormClientVal" method="post">
+            @Html.AntiForgeryToken()
+
+            <div class="mb-4">
+                <label for="Login" class="block text-black text-sm font-bold mb-2">Login</label>
+                <input type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring focus:border-blue-500" asp-for="Login" id="Login" />
+                <span class="text-red-500 text-xs italic" asp-validation-for="Login"></span>
+            </div>
+
+            <div class="mb-4">
+                <label for="Telephone" class="block text-black text-sm font-bold mb-2">Téléphone</label>
+                <input type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring focus:border-blue-500" asp-for="Telephone" id="Telephone" />
+                <span class="text-red-500 text-xs italic" asp-validation-for="Telephone"></span>
+            </div>
+
+            <div class="flex justify-end">
+                <button type="submit" class="bg-burgundy text-white font-bold py-2 px-4 rounded hover:bg-gray-700">Vérifier</button>
+            </div>
+        </form>
+    </div>
+</div>

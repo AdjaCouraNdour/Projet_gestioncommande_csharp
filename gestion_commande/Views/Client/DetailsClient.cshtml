@@ -1,0 +1,20 @@
+﻿@model gestion_commande.Models.Client
+
+<h2 class="text-3xl font-bold text-white text-center bg-burgundy p-4 rounded-t-lg">Détails du Client</h2>
+
+<div class="container mx-auto p-6 bg-white rounded-lg shadow-md">
+    <div class="space-y-4 mb-4">
+        <p><strong class="font-semibold text-gray-700">Id :</strong> @Model.Id</p>
+        <p><strong class="font-semibold text-gray-700">Email :</strong> @Model.Email</p>
+        <p><strong class="font-semibold text-gray-700">Login/Username :</strong> @Model.Login</p>
+        <p><strong class="font-semibold text-gray-700">Téléphone :</strong> @Model.Telephone</p>
+        <p><strong class="font-semibold text-gray-700">Adresse :</strong> @Model.Address</p>
+        <p><strong class="font-semibold text-gray-700">Date de création :</strong> @Model.CreateAt</p>
+        <p><strong class="font-semibold text-gray-700 ">Date de mise à jour :</strong> @Model.UpdateAt</p>
+    </div>
+
+    <!-- Bouton retour avec un style adapté -->
+    <a href="@Url.Action("Index", "Client")" class="mt-6 inline-block px-6 py-2 bg-burgundy text-white font-semibold rounded-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+        Retour à la liste
+    </a>
+</div>

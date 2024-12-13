@@ -77,10 +77,10 @@ namespace gestion_commande.Services
             return client;
         }
 
-        public async Task<Client> FindByUsernameAndTelephone(string username, string telephone)
+        public async Task<Client> FindByUsernameAndTelephone(string login, string telephone)
         {
             return await _context.Clients
-                         .FirstOrDefaultAsync(c => c.Username == username && c.Telephone == telephone);   
+                         .FirstOrDefaultAsync(c => c.Login == login && c.Telephone == telephone);   
         }
 
 

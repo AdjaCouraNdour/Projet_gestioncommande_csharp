@@ -1,0 +1,64 @@
+@using gestion_commande.Models
+@model Client
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription</title>
+    <link rel="stylesheet" href="~/css/output.css" />
+</head>
+<body class="bg-bleugris  flex justify-center items-center h-screen">
+  
+<div class=" w-full mt-4 max-w-md mx-auto bg-white shadow-md rounded-lg">
+    <div class="bg-gray-800 text-white text-lg font-bold p-4 rounded-t-lg">Inscription</div>
+    <div class="p-6">
+
+        @if (ViewBag.Message != null)
+        {
+            <div class="text-red-500 text-center mb-4">
+                @ViewBag.Message
+            </div>
+        }
+
+        <form asp-action="FormClient"  method="post">
+            <div class="mb-2">
+                <label for="Email" class="block text-black text-sm font-bold mb-2" asp-for="Email">Email</label>
+                <input type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring focus:border-blue-500" asp-for="Email" id="" />
+                <span class="text-red-500 text-xs italic" asp-validation-for="Email"></span>
+            </div>
+            <div class="mb-2 flex justify-between space-x-4 ">
+                <div class="w-1/2">
+                    <label for="Login" class="block text-black text-sm font-bold mb-2" asp-for="Login">Login/Username</label>
+                    <input type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring focus:border-blue-500" asp-for="Login" id="" />
+                    <span class="text-red-500 text-xs italic" asp-validation-for="Login"></span>
+                </div>
+                <div class="w-1/2">
+                    <label for="Telephone" class="block text-black text-sm font-bold mb-2" asp-for="Telephone">Téléphone</label>
+                    <input type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring focus:border-blue-500" asp-for="Telephone" id="" />
+                    <span class="text-red-500 text-xs italic" asp-validation-for="Telephone"></span>
+                </div>
+             </div>
+             <div class="mb-2 ">
+                <label for="Address" class="block text-black text-sm font-bold mb-2" asp-for="Address">Adresse</label>
+                <textarea type="text" id="Address" class="shadow appearance-none border rounded w-full py-1 px-3 text-gray-700 leading-tight focus:outline-none focus:ring focus:border-blue-500" asp-for="Address"></textarea>   
+            </div>
+            <div class="mb-4">
+                <label for="Password" class="block text-black text-sm font-bold mb-2" asp-for="Password">Password</label>
+                <input type="text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring focus:border-blue-500" asp-for="Password" id="" />
+                <span class="text-red-500 text-xs italic" asp-validation-for="Password"></span>
+            </div>
+
+            <div class="flex justify-end">
+                <button class="bg-bleugris text-white font-bold py-2 px-4 rounded hover:bg-bleugris focus:outline-none focus:ring focus:ring-gray-400" type="submit">Soumettre</button>
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+</body>
+</html>

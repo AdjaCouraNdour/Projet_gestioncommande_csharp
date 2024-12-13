@@ -35,7 +35,7 @@ namespace gestion_commande.Controllers
         // Action pour ajouter un client
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> FormClient([Bind("Surnom,Telephone,Address")] Client client)
+        public async Task<IActionResult> FormClient([Bind("Email,Login,Telephone,Address,Password")] Client client)
         {
             if (ModelState.IsValid)
             {

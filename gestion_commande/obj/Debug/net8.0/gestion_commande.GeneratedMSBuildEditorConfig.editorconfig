@@ -26,6 +26,26 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Users\KIKI\Documents\ISM L3\exam\C#\gestion_commande
 build_property._RazorSourceGeneratorDebug = 
 
+[C:/Users/KIKI/Documents/ISM L3/exam/C\#/gestion_commande/Views/Client/DetailsClient.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50XERldGFpbHNDbGllbnQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/KIKI/Documents/ISM L3/exam/C\#/gestion_commande/Views/Client/DetailsCommande.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50XERldGFpbHNDb21tYW5kZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/KIKI/Documents/ISM L3/exam/C\#/gestion_commande/Views/Client/FormClient.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50XEZvcm1DbGllbnQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/KIKI/Documents/ISM L3/exam/C\#/gestion_commande/Views/Client/FormClientVal.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50XEZvcm1DbGllbnRWYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/KIKI/Documents/ISM L3/exam/C\#/gestion_commande/Views/Client/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50XEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/KIKI/Documents/ISM L3/exam/C\#/gestion_commande/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 

@@ -1,7 +1,5 @@
 using gestion_commande.Core;
 using gestion_commande.Data;
-using gestion_commande.Services;
-using gestion_commande.Enums;
 using gestion_commande.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using gestion_commande.Models;
