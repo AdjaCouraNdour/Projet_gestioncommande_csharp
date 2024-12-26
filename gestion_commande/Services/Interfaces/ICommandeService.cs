@@ -8,11 +8,12 @@ namespace gestion_commande.Services.Interfaces
     {
         IEnumerable<Commande> GetCommandes();
         Task<List<Commande>> FindByClientId(int ClientId);
-        // Task<Commande> Create(int clientId, Commande commande, List<ProduitCommande> produitSelections);
         Task<Commande> Create(int clientId, Commande commande);
-        Task<PaginationModel<Commande>> GetCommandesClientByPaginate(int clientId ,int page, int pageSize);
-
+        Task<PaginationModel<Commande>> GetCommandesClientByPaginate(int clientId ,int page, int pageSize);     
+        void CreerCommandePourClient(int clientId);
         Task<PaginationModel<Commande>> GetCommandesByPaginate(int page, int pageSize);
-
+        Task<Commande> FindDetailsComdById(int id);
+        Task ValiderCommande(Commande commande);
+        Task MettreEnAttente(Commande commande);
     }
 }

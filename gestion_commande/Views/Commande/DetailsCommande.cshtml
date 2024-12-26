@@ -1,1 +1,52 @@
-﻿
+﻿@model IEnumerable<gestion_commande.Models.ProduitCommande>
+@{
+    ViewData["Title"] = "Liste des Produits";
+    Layout = "_Layout";
+}
+
+<div class="flex flex-col bg-gray-100 p-4 rounded-lg shadow-md">
+    <div class="flex justify-between items-center mb-4">
+
+    <h2 class="text-2xl font-semibold text-center mb-4">@ViewData["Title"]</h2> <!-- Titre centré et espacé -->
+     <div>
+         <a asp-action="TraiterCommande" class="text-white bg-bleugris py-2 px-4 rounded hover:bg-bleugrisclairclair">
+                Traiter
+        </a>
+     </div>
+     </div>
+     
+    @if (Model == null || !Model.Any())
+    {
+        <p class="py-4 text-center text-gray-500">Aucun Produit trouvé pour cette commande.</p>
+    }
+    else
+    {
+        <table class="min-w-full bg-white border border-gray-300 rounded-lg mb-4">
+            <thead>
+                <tr class="bg-bleugris">
+                    <th class="py-2 px-4 border-b text-black text-left">Libelle</th>
+                    <th class="py-2 px-4 border-b text-black text-left">Prix Unitaire</th>
+                    <th class="py-2 px-4 border-b text-black text-left">Montant</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var produitCommande in Model)
+                {
+                    <tr class="bg-bleugrisclair hover:bg-gray-100">
+                        <td class="py-2 px-4 border-b">@produitCommande.Produit.Libelle</td>
+                        <td class="py-2 px-4 border-b">@produitCommande.Produit.Prix</td>
+                        <td class="py-2 px-4 border-b">@(produitCommande.Produit.Prix * produitCommande.Quantity)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <!-- Le bouton en dessous du tableau avec un espacement de marge -->
+        <div class="mt-4">
+            <a asp-action="Index" class="text-white bg-bleugris py-2 px-4 rounded hover:bg-burgundyclair">
+                Retour à la liste des commandes
+            </a>
+           
+        </div>
+    }
+</div>

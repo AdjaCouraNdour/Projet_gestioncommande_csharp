@@ -1,0 +1,70 @@
+@model IEnumerable<gestion_commande.Models.Livreur>
+@{
+    ViewData["Title"] = "Liste des Livreurs Disponibles";
+    Layout = "_Layout";
+}
+
+<div class="flex flex-col bg-gray-100 p-4 rounded-lg shadow-md">
+    <div class="flex justify-between items-center mb-4">
+        <h2 class="text-2xl font-semibold text-center mb-4">@ViewData["Title"]</h2>
+    </div>
+
+    @if (Model == null || !Model.Any())
+    {
+        <p class="py-4 text-center text-gray-500">Aucun livreur disponible.</p>
+    }
+    else
+    {
+        <table class="min-w-full bg-white border border-gray-300 rounded-lg mb-4">
+            <thead>
+                <tr class="bg-bleugris">
+                    <th class="py-2 px-4 border-b text-black text-left">Nom Complet</th>
+                    <th class="py-2 px-4 border-b text-black text-left">Téléphone</th>
+                    <th class="py-2 px-4 border-b text-black text-left">Email</th>
+                    <th class="py-2 px-4 border-b text-black text-left">État</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var livreur in Model)
+                {
+                    <tr class="bg-bleugrisclair hover:bg-gray-100">
+                        <td class="py-2 px-4 border-b">@livreur.NomComplet</td>
+                        <td class="py-2 px-4 border-b">@livreur.Telephone</td>
+                        <td class="py-2 px-4 border-b">@livreur.Email</td>
+                        <td class="py-2 px-4 border-b">@livreur.EtatLivreur</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <!-- Sélectionner un livreur -->
+        <div class="mb-4">
+            <label for="livreurSelect" class="block text-lg font-semibold">Sélectionner un livreur</label>
+            <select id="livreurSelect" class="mt-2 p-2 border rounded w-full">
+                <option value="">-- Choisir un livreur --</option>
+                @foreach (var livreur in Model)
+                {
+                    <option value="@livreur.Id">@livreur.NomComplet</option>
+                }
+            </select>
+        </div>
+
+        <!-- Formulaire pour valider et mettre en attente -->
+        <div class="mt-4 flex justify-between space-x-4">
+            <form method="post" action="@Url.Action("ValiderCommande", "commande")">
+                <input type="hidden" name="idCommande" value="@Model.First().Id" />
+                <input type="hidden" name="livreurId" value="@Model.First().Id" />
+                <button type="submit" class="text-white bg-bleugris py-2 px-4 rounded hover:bg-green-700">
+                    Valider
+                </button>
+            </form>
+
+            <form method="post" action="@Url.Action("EnAttenteCommande", "commande")">
+                <input type="hidden" name="id" value="@Model.First().Id" />
+                <button type="submit" class="text-white bg-bleugris py-2 px-4 rounded hover:bg-yellow-700">
+                    En Attente
+                </button>
+            </form>
+        </div>
+    }
+</div>

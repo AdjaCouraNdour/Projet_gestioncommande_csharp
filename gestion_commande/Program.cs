@@ -15,9 +15,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 // Ajouter les services au conteneur d'injection de dépendances
 builder.Services.AddScoped<IClientService, ClientService>();
+builder.Services.AddScoped<ILivreurService, LivreurService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ICommandeService, CommandeService>();
-builder.Services.AddScoped<IDetailsService, DetailsService>();
 builder.Services.AddScoped<IPaiementService, PaiementService>();
 builder.Services.AddScoped<IProduitService, ProduitService>();
 

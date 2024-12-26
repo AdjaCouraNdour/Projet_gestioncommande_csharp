@@ -9,6 +9,7 @@ namespace gestion_commande.Services.Interfaces
     {
         Task<Livreur> FindByEtat(EtatLivreur etat);
         IEnumerable<Livreur> GetLivreurs();
+        Task<IEnumerable<Livreur>> GetLivreursDispo();
         Task<PaginationModel<Livreur>> GetLivreursByPaginate(int page, int pageSize);
 
     }

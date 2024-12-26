@@ -34,10 +34,6 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50XERldGFpbHNDbGllbnQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/KIKI/Documents/ISM L3/exam/C\#/gestion_commande/Views/Client/DetailsCommande.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50XERldGFpbHNDb21tYW5kZS5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/KIKI/Documents/ISM L3/exam/C\#/gestion_commande/Views/Client/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50XEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -68,6 +64,14 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/KIKI/Documents/ISM L3/exam/C\#/gestion_commande/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/KIKI/Documents/ISM L3/exam/C\#/gestion_commande/Views/Livreur/FormLivreur.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTGl2cmV1clxGb3JtTGl2cmV1ci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/KIKI/Documents/ISM L3/exam/C\#/gestion_commande/Views/Livreur/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTGl2cmV1clxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/KIKI/Documents/ISM L3/exam/C\#/gestion_commande/Views/Produit/DetailsProduit.cshtml]

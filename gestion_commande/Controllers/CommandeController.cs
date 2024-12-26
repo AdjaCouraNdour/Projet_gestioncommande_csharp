@@ -5,25 +5,43 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using gestion_commande.Enums;
 using System.Security.Claims;
+using gestion_commande.Data;
 
 namespace gestion_commande.Controllers
 {
     public class commandeController : Controller
     {
         private readonly ICommandeService _commandeService;
-        private readonly IDetailsService _detailsService;
         private readonly IPaiementService _paiementService;
         private readonly IClientService _clientService;
+        private readonly ILivreurService _livreurService;
         private readonly IProduitService _produitService;
 
-        public commandeController(ICommandeService commandeService, IDetailsService detailsService, IPaiementService paiementService, IClientService clientService,IProduitService produitService)
+        public commandeController(ICommandeService commandeService, IPaiementService paiementService, IClientService clientService,ILivreurService livreurService,IProduitService produitService)
         {
             _commandeService = commandeService;
-            _detailsService = detailsService;
             _paiementService = paiementService;
             _clientService = clientService;
+            _livreurService = livreurService;
             _produitService=produitService;
         }
+
+
+        // public IActionResult CreerCommandePourClient(int clientId)
+        // {
+        //     try
+        //     {
+        //         _commandeService.CreerCommandePourClient(clientId);
+        //         Console.WriteLine($"Commande pour le client {clientId} créée avec succès !");
+        //         return Content("Commande créée avec succès !");
+        //     }
+        //     catch (Exception ex)
+        //     {
+        //         Console.WriteLine($"Erreur : {ex.Message}");
+        //         return Content($"Erreur : {ex.Message}");
+        //     }
+        // }
+
 
         // Action pour afficher la liste des commandes avec pagination
         public async Task<IActionResult> Index(int page = 1, int pageSize = 3)
@@ -51,15 +69,17 @@ namespace gestion_commande.Controllers
         }
 
         // Action pour afficher les détails d'une commande
-        public async Task<IActionResult> Details(int id)
+       public async Task<IActionResult> DetailsCommande(int id)
         {
-            var commande = await _commandeService.FindById(id);
+            var commande = await _commandeService.FindDetailsComdById(id);
             if (commande == null)
             {
                 return NotFound();
             }
-            return View(commande);
+            var produitsCommande = commande.ProduitsCommande; 
+            return View(produitsCommande);
         }
+
 
         [HttpPost]
         public async Task<IActionResult> Accepte(int commandeId)
@@ -179,6 +199,7 @@ namespace gestion_commande.Controllers
             {
                 ClientId = client.Id,
                 Client = client,
+                EtatCommande = EtatCommande.Encours,
                 ProduitsCommande = produitsCommandes,
                 Montant = produitsCommandes.Sum(pc => pc.Quantity * pc.PrixUnitaire),
                 MontantRestant = produitsCommandes.Sum(pc => pc.Quantity * pc.PrixUnitaire)
@@ -188,5 +209,54 @@ namespace gestion_commande.Controllers
             TempData["Message"] = "Commande créée avec succès!";
             return RedirectToAction("Index");
         }
+
+
+        [HttpPost]
+        public async Task<IActionResult> ValiderCommande(int idCommande, int livreurId)
+        {
+            // Récupérer la commande et le livreur sélectionné
+            var commande = await _commandeService.FindById(idCommande);
+            var livreur = await _livreurService.FindById(livreurId);
+            
+            if (commande == null || livreur == null)
+            {
+                return NotFound();
+            }
+            livreur.EtatLivreur = EtatLivreur.EnCourse;
+            await _livreurService.Update(livreur);
+            _commandeService.ValiderCommande(commande);
+            TempData["Message"] = "Commande validée et livreur mis à jour avec succès!";
+            return RedirectToAction(nameof(Index));  // Rediriger vers la liste des commandes
+        }
+
+        // Action pour mettre la commande en attente
+        public async Task<IActionResult> EnAttenteCommande(int id)
+        {
+            // Attendez la complétion de la tâche pour obtenir le résultat
+            var commande = await _commandeService.FindById(id);
+            
+            if (commande == null)
+            {
+                return NotFound();
+            }
+            
+            await _commandeService.MettreEnAttente(commande);  // Si cette méthode est asynchrone aussi, utilisez await
+            TempData["Message"] = "Commande mise en attente.";
+            return RedirectToAction(nameof(Index));  // Redirige vers la liste des commandes
+        }
+
+
+        public async Task<IActionResult> TraiterCommande()
+        {
+            var livreurs = await _livreurService.GetLivreursDispo();  // Utilisation de await ici
+
+            if (livreurs == null || !livreurs.Any())
+            {
+                ViewBag.MessageErreur = "Aucun livreur disponible pour le moment.";
+                livreurs = new List<Livreur>();
+            }
+            return View(livreurs);  // Passer la liste des livreurs en tant que Model
+        }
+
     }
 }

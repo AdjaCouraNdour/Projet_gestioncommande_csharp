@@ -18,10 +18,15 @@ namespace gestion_commande.Services
             _context = context;
         }
         
-        public  IEnumerable<Livreur> GetLivreurs()
+        public IEnumerable<Livreur> GetLivreurs()
         {
             return _context.Livreurs.ToList();
         }
+        public async Task<IEnumerable<Livreur>> GetLivreursDispo()
+        {
+            return await _context.Livreurs.Where(l => l.EtatLivreur == EtatLivreur.Disponible).ToListAsync();
+        }
+
         // Implémentation de la méthode Delete
         public async Task Delete(int id)
         {

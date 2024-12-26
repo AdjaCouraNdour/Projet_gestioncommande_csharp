@@ -3,6 +3,7 @@ using gestion_commande.Data;
 using gestion_commande.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using gestion_commande.Models;
+using gestion_commande.Enums;
 
 
 namespace gestion_commande.Services
@@ -10,12 +11,10 @@ namespace gestion_commande.Services
     public class CommandeService : ICommandeService
     {
         private readonly ApplicationDbContext _context;
-        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public CommandeService(ApplicationDbContext context, IHttpContextAccessor httpContextAccessor)
+        public CommandeService(ApplicationDbContext context)
         {
             _context = context;
-            _httpContextAccessor = httpContextAccessor;
         }
         
         public IEnumerable<Commande> GetCommandes()
@@ -43,6 +42,13 @@ namespace gestion_commande.Services
         public async Task<Commande> FindById(int id)
         {
             return await _context.Commandes.FindAsync(id);
+        }
+        public async Task<Commande> FindDetailsComdById(int id)
+        {
+            return await _context.Commandes
+                .Include(c => c.ProduitsCommande)
+                .ThenInclude(pc => pc.Produit) 
+                .FirstOrDefaultAsync(c => c.Id == id);
         }
 
         // Implémentation de la méthode Save
@@ -100,7 +106,8 @@ namespace gestion_commande.Services
          public async Task<PaginationModel<Commande>> GetCommandesByPaginate(int page, int pageSize)
         {
             var commandes = _context.Commandes
-                .Include(d => d.Client) 
+                .Include(d => d.Client)  // Inclure le Client
+                .ThenInclude(c => c.User)  // Inclure User à l'intérieur du Client
                 .AsQueryable();
 
             return await PaginationModel<Commande>.Paginate(commandes, pageSize, page);
@@ -112,9 +119,74 @@ namespace gestion_commande.Services
             return await PaginationCommandeModel.PaginateCommande(commandes, pageSize, page, client);
         }
 
-        // public Task<Commande> Create(Commande data)
+        public void CreerCommandePourClient(int clientId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task ValiderCommande(Commande commande)
+        {
+            if (commande == null) throw new ArgumentNullException(nameof(commande));
+
+            commande.EtatCommande = EtatCommande.Valide;
+            _context.Commandes.Update(commande);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task MettreEnAttente(Commande commande)
+        {
+            if (commande == null) throw new ArgumentNullException(nameof(commande));
+            commande.EtatCommande = EtatCommande.EnAttente;
+            _context.Commandes.Update(commande);
+            await _context.SaveChangesAsync();
+        }
+        //      public void CreerCommandePourClient(int clientId)
         // {
-        //     throw new NotImplementedException();
+        //     // Vérifier si le client existe
+        //     var client = _context.Clients.FirstOrDefault(c => c.Id == clientId);
+        //     if (client == null)
+        //     {
+        //         throw new Exception("Client introuvable !");
+        //     }
+
+        //     // Créer une nouvelle commande
+        //     var nouvelleCommande = new Commande
+        //     {
+        //         ClientId = client.Id,
+        //         Montant = 200.00, // Exemple de montant
+        //         MontantVerse = 100.00,
+        //         MontantRestant = 100.00,
+        //         EtatCommande = EtatCommande.Valide
+        //     };
+
+        //     // Ajouter des produits à la commande
+        //     var produit1 = _context.Produits.FirstOrDefault(p => p.Id == 1); // Exemple : Produit ID 1
+        //     if (produit1 != null)
+        //     {
+        //         nouvelleCommande.ProduitsCommande.Add(new ProduitCommande
+        //         {
+        //             ProduitId = produit1.Id,
+        //             Quantity = 2,
+        //             PrixUnitaire = produit1.Prix
+        //         });
+        //     }
+
+        //     var produit2 = _context.Produits.FirstOrDefault(p => p.Id == 2); // Exemple : Produit ID 2
+        //     if (produit2 != null)
+        //     {
+        //         nouvelleCommande.ProduitsCommande.Add(new ProduitCommande
+        //         {
+        //             ProduitId = produit2.Id,
+        //             Quantity = 1,
+        //             PrixUnitaire = produit2.Prix
+        //         });
+        //     }
+
+        //     // Ajouter la commande au contexte
+        //     _context.Commandes.Add(nouvelleCommande);
+
+        //     // Sauvegarder les modifications
+        //     _context.SaveChanges();
         // }
     }
 }

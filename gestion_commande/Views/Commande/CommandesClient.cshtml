@@ -53,9 +53,11 @@
                     <td class="py-2 px-4 border-b">@commande.MontantVerse</td>
                     <td class="py-2 px-4 border-b">@commande.EtatCommande</td>
                     <td class="py-2 px-4 border-b text-center">
-                        <a href="@Url.Action("DetailsCommande", "Client", new { commandeId = commande.Id })" class="bg-bleugris text-white text-sm px-4 rounded-lg hover:bg-red-700">
+                        <a href="@Url.Action("DetailsCommande", "Commande", new { id = commande.Id })" class="bg-bleugris text-white text-sm px-4 rounded-lg hover:bg-red-700">
                             Details
                         </a>
+                        @* <a asp-controller="Commande" asp-action="DetailsCommande" asp-route-commandeId="@commande.Id">Détails</a> *@
+
                     </td>
                 </tr>
             }
