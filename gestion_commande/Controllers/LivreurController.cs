@@ -29,6 +29,19 @@ namespace gestion_commande.Controllers
             return View(livreurs);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> DisponibleLivreur(int livreurId)
+        {
+            var livreur = await _livreurService.FindById(livreurId); 
+            if (livreur == null)
+            {
+                return NotFound();
+            }
+            livreur.EtatLivreur = EtatLivreur.Disponible;
+            await _livreurService.Update(livreur);
+            return RedirectToAction(nameof(Index));  // Rediriger vers la liste des commandes
+        }
+
      
         public IActionResult FormLivreur()
         {

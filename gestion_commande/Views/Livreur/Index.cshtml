@@ -58,10 +58,18 @@
                                 </svg>
                             </a>
 
-                            <!-- Bouton Commandes -->
-                            <a href="@Url.Action("CommandesLivreur", "Commande", new { id  = livreur.Id })" class="bg-bleugris text-white text-sm px-4 rounded-lg hover:bg-gray-700">
-                                Commandes
-                            </a>
+                            @if (livreur.EtatLivreur != gestion_commande.Enums.EtatLivreur.Disponible)
+                            {
+                                <a href="@Url.Action("DisponibleLivreur", "Livreur", new { id  = livreur.Id })" class="bg-bleugris text-white text-sm px-4 rounded-lg hover:bg-gray-700">
+                                    Dispo
+                                </a>
+                            }
+                            else
+                            {
+                                <span class="bg-gray-300 text-black text-sm px-4 py-2 rounded-lg cursor-not-allowed">
+                                    -----
+                                </span>
+                            }
                         </div>
                     </td>
                 </tr>

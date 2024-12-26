@@ -13,7 +13,6 @@ namespace gestion_commande.Services
     {
         private readonly ApplicationDbContext _context;
 
-        // Injecter le contexte de la base de données dans le service
         public ClientService(ApplicationDbContext context)
         {
             _context = context;
@@ -36,13 +35,11 @@ namespace gestion_commande.Services
             }
         }
 
-        // Implémentation de la méthode FindAll
         public async Task<List<Client>> FindAll()
         {
             return await _context.Clients.ToListAsync();
         }
 
-        // Implémentation de la méthode FindById
         public async Task<Client> FindById(int id)
         {
             return await _context.Clients
@@ -86,20 +83,14 @@ namespace gestion_commande.Services
             return client;
         }
 
-        // public async Task<Client> FindByUsernameAndTelephone(string login, string telephone)
-        // {
-        //     return await _context.Clients
-        //                  .FirstOrDefaultAsync(c => c.Login == login && c.Telephone == telephone);   
-        // }
+        public async Task<PaginationModel<Client>> GetClientsByPaginate(int page, int pageSize)
+        {
+            var clients = _context.Clients
+                .Include(c => c.User) 
+                .AsQueryable();
 
-    public async Task<PaginationModel<Client>> GetClientsByPaginate(int page, int pageSize)
-    {
-        var clients = _context.Clients
-            .Include(c => c.User) 
-            .AsQueryable();
-
-        return await PaginationModel<Client>.Paginate(clients, pageSize, page);
-    }
+            return await PaginationModel<Client>.Paginate(clients, pageSize, page);
+        }
 
     
     }

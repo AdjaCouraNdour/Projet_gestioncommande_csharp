@@ -1,0 +1,107 @@
+@using gestion_commande.Core;
+@using gestion_commande.Models;
+@model PaginationCommandeModel;
+@{
+    ViewData["Title"] = "Liste des commandes";
+    Layout = "_Layout";
+    var totalMontant = Model.Items.Sum(commande => commande.Montant);
+    var totalMontantVerse = Model.Items.Sum(commande => commande.MontantVerse);
+    var totalMontantRestant = totalMontant - totalMontantVerse;
+}
+
+<div class="container mx-auto px-4 py-6">
+    <!-- Informations Client -->
+    <div class="flex justify-between bg-gray-100 p-4 rounded-lg shadow-md mb-6">
+        <div>
+            <h2 class="text-lg font-bold">Informations du Client</h2>
+            <p><strong>Nom :</strong> </p>
+            <p><strong>Téléphone :</strong> </p>
+            <p><strong>Adresse :</strong> </p>
+        </div>
+
+        <div>
+            <h2 class="text-lg font-bold">Détails des commandes</h2>
+            <ul>
+                <li><strong>Total Montant :</strong> @totalMontant €</li>
+                <li><strong>Total Montant Versé :</strong> @totalMontantVerse €</li>
+                <li><strong>Total Montant Restant :</strong> @totalMontantRestant €</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Liste des commandes -->
+    <div class="flex justify-between items-center mb-4">
+        <div class="text-lg font-bold">Liste de ces commandes</div>
+    </div>
+
+    <table class="min-w-full bg-white border border-gray-300 rounded-lg mb-6">
+        <thead>
+            <tr class="bg-bleugris">
+                <th class="py-2 px-4 border-b text-white text-left">Montant</th>
+                <th class="py-2 px-4 border-b text-white text-left">Montant Due</th>
+                <th class="py-2 px-4 border-b text-white text-left">Montant Verse</th>
+                <th class="py-2 px-4 border-b text-white text-left">Status</th>
+                <th class="py-2 px-4 border-b text-white">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var commande in Model.Items)
+            {
+                <tr class="bg-white hover:bg-gray-100">
+                    <td class="py-2 px-4 border-b">@commande.Montant</td>
+                    <td class="py-2 px-4 border-b">@commande.MontantRestant</td>
+                    <td class="py-2 px-4 border-b">@commande.MontantVerse</td>
+                    <td class="py-2 px-4 border-b">@commande.EtatCommande</td>
+                    <td class="py-2 px-4 border-b text-center">
+                        <a href="@Url.Action("DetailsCommande", "Commande", new { id = commande.Id })" class="bg-bleugris text-white text-sm px-4 rounded-lg hover:bg-red-700">
+                            Details
+                        </a>
+                    </td>
+                </tr>
+            }
+
+            @if (!Model.Items.Any())
+            {
+                <tr>
+                    <td colspan="4" class="py-2 px-4 text-center">Aucune commande trouvée.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <!-- Pagination -->
+    <nav aria-label="Page navigation" class="flex justify-end">
+        <ul class="inline-flex items-center space-x-1">
+            @if (Model.HasPreviousPage)
+            {
+                <li>
+                    <a href="@Url.Action("CommandeClient", new { clientId = Model.Client.Id, page = Model.CurrentPage - 1 })"
+                       class="px-3 py-2 text-gray-500 bg-white border border-gray-300 rounded-l-md hover:bg-gray-100 hover:text-gray-700"
+                       aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+            }
+            @for (int i = 1; i <= Model.TotalPages; i++)
+            {
+                <li>
+                    <a href="@Url.Action("CommandeClient", new { clientId = Model.Client.Id, page = i })"
+                       class="px-3 py-2 border border-gray-300 @(i == Model.CurrentPage ? "bg-blue-500 text-white" : "bg-white text-gray-500 hover:bg-gray-100 hover:text-gray-700")">
+                        @i
+                    </a>
+                </li>
+            }
+            @if (Model.HasNextPage)
+            {
+                <li>
+                    <a href="@Url.Action("CommandeClient", new { clientId = Model.Client.Id, page = Model.CurrentPage + 1 })"
+                       class="px-3 py-2 text-gray-500 bg-white border border-gray-300 rounded-r-md hover:bg-gray-100 hover:text-gray-700"
+                       aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            }
+        </ul>
+    </nav>
+    <a class="bg-bleugris text-white py-2 text-sm px-4 rounded-lg hover:bg-red-700 mt-4 block" asp-action="Index" >⬅️ Retour à la liste</a>
+</div>

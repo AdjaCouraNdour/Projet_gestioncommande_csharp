@@ -26,31 +26,25 @@ namespace gestion_commande.Controllers
             _produitService=produitService;
         }
 
-
-        // public IActionResult CreerCommandePourClient(int clientId)
-        // {
-        //     try
-        //     {
-        //         _commandeService.CreerCommandePourClient(clientId);
-        //         Console.WriteLine($"Commande pour le client {clientId} créée avec succès !");
-        //         return Content("Commande créée avec succès !");
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         Console.WriteLine($"Erreur : {ex.Message}");
-        //         return Content($"Erreur : {ex.Message}");
-        //     }
-        // }
-
-
-        // Action pour afficher la liste des commandes avec pagination
         public async Task<IActionResult> Index(int page = 1, int pageSize = 3)
         {
             var commandes = await _commandeService.GetCommandesByPaginate(page, pageSize);
             return View(commandes);
         }
         
-        public async Task<IActionResult> CommandesClient(int page = 1, int pageSize = 3)
+        public async Task<IActionResult> CommandesClient(int clientId ,int page = 1, int pageSize = 3)
+        {
+            var client = await _clientService.FindById(clientId);
+            if (client == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            var commandes = await _commandeService.GetCommandesClientByPaginate(client.Id, page, pageSize);
+            return View(commandes);
+        }
+        
+        public async Task<IActionResult> ListeDeMesCommandes(int page = 1, int pageSize = 3)
         {
             var userLogin = User.FindFirstValue(ClaimTypes.Name);
             if (userLogin == null)
@@ -67,8 +61,6 @@ namespace gestion_commande.Controllers
             var commandes = await _commandeService.GetCommandesClientByPaginate(client.Id, page, pageSize);
             return View(commandes);
         }
-
-        // Action pour afficher les détails d'une commande
        public async Task<IActionResult> DetailsCommande(int id)
         {
             var commande = await _commandeService.FindDetailsComdById(id);

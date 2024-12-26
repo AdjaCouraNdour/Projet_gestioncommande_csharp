@@ -140,54 +140,7 @@ namespace gestion_commande.Services
             _context.Commandes.Update(commande);
             await _context.SaveChangesAsync();
         }
-        //      public void CreerCommandePourClient(int clientId)
-        // {
-        //     // Vérifier si le client existe
-        //     var client = _context.Clients.FirstOrDefault(c => c.Id == clientId);
-        //     if (client == null)
-        //     {
-        //         throw new Exception("Client introuvable !");
-        //     }
-
-        //     // Créer une nouvelle commande
-        //     var nouvelleCommande = new Commande
-        //     {
-        //         ClientId = client.Id,
-        //         Montant = 200.00, // Exemple de montant
-        //         MontantVerse = 100.00,
-        //         MontantRestant = 100.00,
-        //         EtatCommande = EtatCommande.Valide
-        //     };
-
-        //     // Ajouter des produits à la commande
-        //     var produit1 = _context.Produits.FirstOrDefault(p => p.Id == 1); // Exemple : Produit ID 1
-        //     if (produit1 != null)
-        //     {
-        //         nouvelleCommande.ProduitsCommande.Add(new ProduitCommande
-        //         {
-        //             ProduitId = produit1.Id,
-        //             Quantity = 2,
-        //             PrixUnitaire = produit1.Prix
-        //         });
-        //     }
-
-        //     var produit2 = _context.Produits.FirstOrDefault(p => p.Id == 2); // Exemple : Produit ID 2
-        //     if (produit2 != null)
-        //     {
-        //         nouvelleCommande.ProduitsCommande.Add(new ProduitCommande
-        //         {
-        //             ProduitId = produit2.Id,
-        //             Quantity = 1,
-        //             PrixUnitaire = produit2.Prix
-        //         });
-        //     }
-
-        //     // Ajouter la commande au contexte
-        //     _context.Commandes.Add(nouvelleCommande);
-
-        //     // Sauvegarder les modifications
-        //     _context.SaveChanges();
-        // }
+      
     }
 }
 

@@ -110,29 +110,5 @@ namespace gestion_commande.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // [HttpGet]
-        // public IActionResult FormClientVal()
-        // {
-        //     return View();
-        // }
-        // // Action pour valider les informations d'un client
-        // [HttpPost]
-        // [ValidateAntiForgeryToken]
-        // public async Task<IActionResult> FormClientVal()
-        // {
-        //     if (ModelState.IsValid)
-        //     {
-        //         var client = await _clientService.FindByUsernameAndTelephone(Username, Telephone);
-        //         if (client != null)
-        //         {
-        //             return RedirectToAction("FormCommande", new { clientId = client.Id });
-        //         }
-        //         else
-        //         {
-        //             ModelState.AddModelError("", "Client non trouvé. Veuillez vérifier les informations.");
-        //         }
-        //     }
-        //     return View();
-        // }
     }
 }
