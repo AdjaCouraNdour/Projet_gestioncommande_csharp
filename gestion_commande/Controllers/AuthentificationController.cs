@@ -38,7 +38,9 @@ namespace gestion_commande.Controllers
                 var claims = new List<Claim>
                 {
                     new Claim(ClaimTypes.Name, user.Login),
-                    new Claim("UserId", user.Id.ToString())
+                    new Claim("UserId", user.Id.ToString()),
+                    new Claim(ClaimTypes.Role, user.UserRole.ToString()) // Ajouter le rôle comme revendication
+
                 };
 
                 var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
