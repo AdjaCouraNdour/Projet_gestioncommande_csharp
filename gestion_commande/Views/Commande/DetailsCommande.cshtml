@@ -7,14 +7,17 @@
 <div class="flex flex-col bg-gray-100 p-4 rounded-lg shadow-md">
     <div class="flex justify-between items-center mb-4">
 
-    <h2 class="text-2xl font-semibold text-center mb-4">@ViewData["Title"]</h2> <!-- Titre centré et espacé -->
-     <div>
-         <a asp-action="TraiterCommande" class="text-white bg-bleugris py-2 px-4 rounded hover:bg-bleugrisclairclair">
-                Traiter
-        </a>
-     </div>
-     </div>
-     
+        <h2 class="text-2xl font-semibold text-center mb-4">@ViewData["Title"]</h2> <!-- Titre centré et espacé -->
+        @if (!User.IsInRole("Client"))
+        {
+            <div>
+                <a asp-action="TraiterCommande" class="text-white bg-bleugris py-2 px-4 rounded hover:bg-bleugrisclairclair">
+                        Traiter
+                </a>
+            </div>
+        }
+    </div>
+    
     @if (Model == null || !Model.Any())
     {
         <p class="py-4 text-center text-gray-500">Aucun Produit trouvé pour cette commande.</p>
@@ -41,12 +44,13 @@
             </tbody>
         </table>
 
-        <!-- Le bouton en dessous du tableau avec un espacement de marge -->
-        <div class="mt-4">
-            <a asp-action="Index" class="text-white bg-bleugris py-2 px-4 rounded hover:bg-burgundyclair">
-                Retour à la liste des commandes
-            </a>
-           
-        </div>
+        @if (!User.IsInRole("Client"))
+        {
+            <div class="mt-4">
+                <a asp-action="Index" class="text-white bg-bleugris py-2 px-4 rounded hover:bg-burgundyclair">
+                    Retour à la liste des commandes
+                </a>
+            </div>
+        }
     }
 </div>
