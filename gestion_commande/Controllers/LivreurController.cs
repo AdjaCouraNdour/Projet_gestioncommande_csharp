@@ -32,14 +32,22 @@ namespace gestion_commande.Controllers
         [HttpPost]
         public async Task<IActionResult> DisponibleLivreur(int livreurId)
         {
-            var livreur = await _livreurService.FindById(livreurId); 
+            if (livreurId <= 0)
+            {
+                return BadRequest("Identifiant de livreur invalide.");
+            }
+
+            var livreur = await _livreurService.FindById(livreurId);
             if (livreur == null)
             {
                 return NotFound();
             }
+
             livreur.EtatLivreur = EtatLivreur.Disponible;
             await _livreurService.Update(livreur);
-            return RedirectToAction(nameof(Index));  // Rediriger vers la liste des commandes
+
+            TempData["Message"] = "Le livreur a été marqué comme disponible.";
+            return RedirectToAction(nameof(Index)); // Redirige vers la liste des commandes
         }
 
      

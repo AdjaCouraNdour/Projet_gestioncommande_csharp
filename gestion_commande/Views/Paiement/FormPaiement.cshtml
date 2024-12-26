@@ -1,0 +1,26 @@
+@using gestion_commande.Models
+@model Paiement
+
+<div class="container mx-auto px-4 py-6">
+    <h2 class="text-lg font-bold">Formulaire de Paiement</h2>
+
+    <form method="post" action="@Url.Action("FormPaiement", "Paiement")">
+
+        <div class="mb-4">
+            <label for="montantPaye" class="block text-lg font-semibold">Montant à Payer</label>
+            <input type="number" id="montantPaye" name="MontantPaye" class="mt-2 p-2 border rounded w-full"
+            value="@Model.Montant" required />
+        </div>
+        <div class="mb-2">
+                <label for="TypePaiement" class="block text-black text-sm font-bold mb-2" asp-for="TypePaiement">Type de pâiement</label>
+                <select class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring focus:border-blue-500" asp-for="TypePaiement" asp-items="ViewBag.TypePaiements">
+                </select>
+                <span class="text-red-500 text-xs italic" asp-validation-for="TypePaiement"></span>
+        </div>
+        <div class="mb-4">
+            <button type="submit" class="bg-bleugris text-white py-2 px-4 rounded hover:bg-green-700">
+                Confirmer le Paiement
+            </button>
+        </div>
+    </form>
+</div>

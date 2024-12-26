@@ -5,31 +5,38 @@
 }
 
 <div class="flex flex-col bg-gray-100 p-4 rounded-lg shadow-md">
-    <div class="flex justify-between items-center mb-4">
-
+    <div class="flex justify-between items-center mb-6">
         <h2 class="text-2xl font-semibold text-center mb-4">@ViewData["Title"]</h2> <!-- Titre centré et espacé -->
+        
         @if (!User.IsInRole("Client"))
         {
             <div>
                 <a asp-action="TraiterCommande" class="text-white bg-bleugris py-2 px-4 rounded hover:bg-bleugrisclairclair">
-                        Traiter
+                    Traiter
                 </a>
             </div>
         }
+        @if (User.IsInRole("Client"))
+        {
+        <a href="@Url.Action("FormPaiement", "Paiement", new { id = Model.FirstOrDefault()?.Commande.Id })" class="bg-bleugris text-white text-sm px-4 rounded-lg hover:bg-red-700">
+            Payer
+        </a>
+        }
     </div>
-    
+
     @if (Model == null || !Model.Any())
     {
-        <p class="py-4 text-center text-gray-500">Aucun Produit trouvé pour cette commande.</p>
+        <p class="py-4 text-center text-gray-500">Aucun produit trouvé pour cette commande.</p>
     }
     else
     {
         <table class="min-w-full bg-white border border-gray-300 rounded-lg mb-4">
             <thead>
                 <tr class="bg-bleugris">
-                    <th class="py-2 px-4 border-b text-black text-left">Libelle</th>
+                    <th class="py-2 px-4 border-b text-black text-left">Libellé</th>
                     <th class="py-2 px-4 border-b text-black text-left">Prix Unitaire</th>
-                    <th class="py-2 px-4 border-b text-black text-left">Montant</th>
+                    <th class="py-2 px-4 border-b text-black text-left">Quantité</th>
+                    <th class="py-2 px-4 border-b text-black text-left">Montant Total</th>
                 </tr>
             </thead>
             <tbody>
@@ -38,6 +45,7 @@
                     <tr class="bg-bleugrisclair hover:bg-gray-100">
                         <td class="py-2 px-4 border-b">@produitCommande.Produit.Libelle</td>
                         <td class="py-2 px-4 border-b">@produitCommande.Produit.Prix</td>
+                        <td class="py-2 px-4 border-b">@produitCommande.Quantity</td>
                         <td class="py-2 px-4 border-b">@(produitCommande.Produit.Prix * produitCommande.Quantity)</td>
                     </tr>
                 }
@@ -46,7 +54,7 @@
 
         @if (!User.IsInRole("Client"))
         {
-            <div class="mt-4">
+            <div class="mt-6">
                 <a asp-action="Index" class="text-white bg-bleugris py-2 px-4 rounded hover:bg-burgundyclair">
                     Retour à la liste des commandes
                 </a>

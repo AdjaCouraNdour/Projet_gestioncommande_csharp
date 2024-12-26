@@ -1,8 +1,8 @@
 using gestion_commande.Models;
-using gestion_commande.Services;
+using gestion_commande.Enums;
 using gestion_commande.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace gestion_commande.Controllers
 {
@@ -108,28 +108,39 @@ namespace gestion_commande.Controllers
 
             return View(paiementsCommande);
         }
+        public SelectList GetTypePaiementAsSelectList()
+        {
+            var types = Enum.GetValues(typeof(TypePaiement))
+                            .Cast<TypePaiement>()
+                            .Select(role => new SelectListItem
+                            {
+                                Value = role.ToString(),
+                                Text = role.ToString()
+                            }).ToList();
 
-         // Action pour afficher les paiements d'une commande
-        public async Task<IActionResult> FormPaiement(int commandeId)
+            return new SelectList(types, "Value", "Text");
+        }
+        [HttpGet]
+         public async Task<IActionResult> FormPaiement(int commandeId)
         {
             var commande = await _commandeService.FindById(commandeId);
             if (commande == null)
             {
                 return NotFound();
             }
-
-            ViewBag.commande = commande;
+            ViewBag.TypePaiements = GetTypePaiementAsSelectList();
             return View(new Paiement { CommandeId = commande.Id });
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> FormPaiement([Bind("Montant, commandeId")] Paiement paiement)
+        public async Task<IActionResult> FormPaiement([Bind("Montant, CommandeId, TypePaiement")] Paiement paiement)
         {
             if (!ModelState.IsValid)
             {
                 var commande = await _commandeService.FindById(paiement.CommandeId);
                 ViewBag.commande = commande;
+                ViewBag.TypePaiement = GetTypePaiementAsSelectList();  // Assurez-vous de rendre la SelectList à nouveau
                 return View(paiement);
             }
 
@@ -142,8 +153,10 @@ namespace gestion_commande.Controllers
                 return RedirectToAction("commandesClient", "commande");
             }
 
+            // Si quelque chose échoue
             return View(paiement);
         }
+
 
     }
 }

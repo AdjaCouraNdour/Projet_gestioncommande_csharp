@@ -58,12 +58,17 @@
                                 </svg>
                             </a>
 
+                        
                             @if (livreur.EtatLivreur != gestion_commande.Enums.EtatLivreur.Disponible)
                             {
-                                <a href="@Url.Action("DisponibleLivreur", "Livreur", new { id  = livreur.Id })" class="bg-bleugris text-white text-sm px-4 rounded-lg hover:bg-gray-700">
-                                    Dispo
-                                </a>
+                                <form method="post" action="@Url.Action("DisponibleLivreur", "Livreur")">
+                                    <input type="hidden" name="livreurId" value="@livreur.Id" />
+                                    <button type="submit" class="bg-bleugris text-white text-sm px-4 rounded-lg hover:bg-gray-700">
+                                            Dispo
+                                    </button>
+                                </form>
                             }
+                            
                             else
                             {
                                 <span class="bg-gray-300 text-black text-sm px-4 py-2 rounded-lg cursor-not-allowed">

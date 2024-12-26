@@ -11,6 +11,7 @@ namespace gestion_commande.Models
         public DateTime Date { get ; set ; }
         public int CommandeId { get ; set; }  
         public Commande Commande { get ; set ; }
+        public TypePaiement TypePaiement { get; set; }
 
         [Required(ErrorMessage = "Le montant est obligatoire")]
         public double Montant { get ; set ; }

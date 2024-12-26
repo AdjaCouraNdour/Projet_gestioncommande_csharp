@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authentication;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using gestion_commande.Enums;
 
 namespace gestion_commande.Controllers
 {
@@ -50,7 +51,12 @@ namespace gestion_commande.Controllers
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
 
                 // Rediriger vers une page sécurisée après la connexion
-                return RedirectToAction("Index", "Produit"); 
+                if (user.UserRole == UserRole.Client)
+                {
+                    return RedirectToAction("ListeDeMesCommandes", "Commande"); 
+                }else{
+                    return RedirectToAction("Index", "Produit"); 
+                }
             }
             else
             {

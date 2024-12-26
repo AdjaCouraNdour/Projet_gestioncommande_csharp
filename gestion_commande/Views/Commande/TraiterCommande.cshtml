@@ -1,4 +1,5 @@
 @model IEnumerable<gestion_commande.Models.Livreur>
+
 @{
     ViewData["Title"] = "Liste des Livreurs Disponibles";
     Layout = "_Layout";
@@ -40,7 +41,7 @@
         <!-- Sélectionner un livreur -->
         <div class="mb-4">
             <label for="livreurSelect" class="block text-lg font-semibold">Sélectionner un livreur</label>
-            <select id="livreurSelect" class="mt-2 p-2 border rounded w-full">
+            <select id="livreurSelect" name="livreurId" class="mt-2 p-2 border rounded w-full" form="commandeForm">
                 <option value="">-- Choisir un livreur --</option>
                 @foreach (var livreur in Model)
                 {
@@ -51,9 +52,8 @@
 
         <!-- Formulaire pour valider et mettre en attente -->
         <div class="mt-4 flex justify-between space-x-4">
-            <form method="post" action="@Url.Action("ValiderCommande", "commande")">
+            <form id="commandeForm" method="post" action="@Url.Action("ValiderCommande", "commande")">
                 <input type="hidden" name="idCommande" value="@Model.First().Id" />
-                <input type="hidden" name="livreurId" value="@Model.First().Id" />
                 <button type="submit" class="text-white bg-bleugris py-2 px-4 rounded hover:bg-green-700">
                     Valider
                 </button>

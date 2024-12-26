@@ -2,7 +2,7 @@
 
 namespace gestion_commande.Enums
 {
-    public enum EtatDette
+    public enum TypePaiement
     {
         Cheque,Espece,Wave,OM
     }
