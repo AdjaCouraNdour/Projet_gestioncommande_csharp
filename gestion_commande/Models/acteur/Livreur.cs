@@ -23,5 +23,7 @@ namespace gestion_commande.Models
         [Required(ErrorMessage = "Le telephone est obligatoire")]
         [RegularExpression(@"^(77|78|76)[0-9]{7}$",ErrorMessage = "Le telephone doit etrre sous forme 77xxxxxxx ou 78xxxxxxx ou 76xxxxxxx")]
         public string Telephone { get; set; }
+        public EtatLivreur EtatLivreur { get; set; }
+
     }
 }

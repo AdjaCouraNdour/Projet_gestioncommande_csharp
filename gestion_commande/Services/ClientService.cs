@@ -22,7 +22,7 @@ namespace gestion_commande.Services
         public IEnumerable<Client> GetClients()
         {
             return _context.Clients
-                   .Include(c => c.User) // Inclure les données de l'utilisateur associé
+                   .Include(c => c.User) 
                    .ToList();
         }
         // Implémentation de la méthode Delete
@@ -45,24 +45,31 @@ namespace gestion_commande.Services
         // Implémentation de la méthode FindById
         public async Task<Client> FindById(int id)
         {
-            return await _context.Clients.FindAsync(id);
+            return await _context.Clients
+                .Include(c => c.User) 
+                .FirstOrDefaultAsync(c => c.Id == id);
         }
 
-        // Implémentation de la méthode FindByTelephone
-        // public async Task<Client> FindByTelephone(string telephone)
-        // {
-        //     return await _context.Clients
-        //         .FirstOrDefaultAsync(c => c.Telephone == telephone);
-        // }
+        public async Task<Client> FindClientByUserLogin(string userLogin)
+        {
+            if (string.IsNullOrEmpty(userLogin))
+            {
+                throw new ArgumentException("Le login de l'utilisateur ne peut pas être vide.");
+            }
+            var client = await _context.Clients
+                .Include(c => c.User)  
+                .FirstOrDefaultAsync(c => c.User.Login == userLogin); 
 
-        // Implémentation de la méthode Save
+            return client;
+        }
+
+
         public async Task Save(Client data)
         {
             await _context.Clients.AddAsync(data);
             await _context.SaveChangesAsync();
         }
 
-        // Implémentation de la méthode Update
         public async Task Update(Client data)
         {
             var existingClient = await _context.Clients.FindAsync(data.Id);
@@ -85,13 +92,14 @@ namespace gestion_commande.Services
         //                  .FirstOrDefaultAsync(c => c.Login == login && c.Telephone == telephone);   
         // }
 
-
     public async Task<PaginationModel<Client>> GetClientsByPaginate(int page, int pageSize)
-        {
-            var clients = _context.Clients.AsQueryable<Client>();
-            return await PaginationModel<Client>.Paginate(clients, pageSize, page);
+    {
+        var clients = _context.Clients
+            .Include(c => c.User) 
+            .AsQueryable();
 
-        }
+        return await PaginationModel<Client>.Paginate(clients, pageSize, page);
+    }
 
     
     }

@@ -1,0 +1,116 @@
+@model List<gestion_commande.Models.ProduitCommande>
+
+@{
+    ViewData["Title"] = "Créer une Commande";
+    var clientId = User.Identity.Name;
+}
+
+<h2 class="text-center font-bold text-3xl text-blue-600">@ViewData["Title"]</h2>
+
+<form asp-action="FormCommande" method="post">
+    @if (TempData["Message"] != null)
+    {
+        <div class="alert alert-success">@TempData["Message"]</div>
+    }
+
+    <div class="flex space-x-6">
+        <!-- Produits Disponibles -->
+        <div class="flex-1">
+            <h3 class="text-lg font-bold mb-6">Produits Disponibles</h3>
+            <table class="table-auto w-full border border-gray-300 rounded-lg">
+                <thead>
+                    <tr class="bg-bleugris text-white">
+                        <th class="py-2 px-4 border-b">Sélect</th>
+                        <th class="py-2 px-4 border-b">Nom</th>
+                        <th class="py-2 px-4 border-b">Prix</th>
+                        <th class="py-2 px-4 border-b">QteStock</th>
+                        <th class="py-2 px-4 border-b">Qte Cmde</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var produit in ViewBag.Produits)
+                    {
+                        <tr>
+                            <td class="py-2 px-4">
+                                <input type="checkbox" name="produitSelections[@produit.Id].ProduitId" value="@produit.Id" />
+                            </td>
+                            <td class="py-2 px-4">@produit.Libelle</td>
+                            <td class="py-2 px-4">@produit.Prix</td>
+                            <td class="py-2 px-4">@produit.QteStock</td>
+                            <td class="bg-bleugrisclair py-2 px-4">
+                                <input type="number" name="produitSelections[@produit.Id].Quantity" min="1" class="form-control w-20" />
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Articles Sélectionnés -->
+        <div class="flex-1">
+            <h3 class="text-lg font-bold mb-6">Articles Sélectionnés</h3>
+            <table class="table-auto w-full border border-gray-300 rounded-lg">
+                <thead>
+                    <tr class="bg-bleugris text-white">
+                        <th class="py-2 px-4 border-b">Libelle</th>
+                        <th class="py-2 px-4 border-b">Quantité</th>
+                        <th class="py-2 px-4 border-b">Prix Total</th>
+                    </tr>
+                </thead>
+                <tbody id="selectedArticles">
+                    <!-- Les articles sélectionnés seront ajoutés ici via JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <input type="hidden" name="clientId" value="@clientId" /> <!-- ID du client -->
+
+    <button type="submit" class="bg-bleugris text-white py-2 px-4 rounded mt-6 hover:bg-blue-700">Créer la Commande</button>
+</form>
+
+<script>
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    const selectedArticlesTable = document.getElementById('selectedArticles');
+
+    checkboxes.forEach(checkbox => {
+        const row = checkbox.closest('tr');
+        const quantityInput = row.querySelector('input[type="number"]');
+
+        checkbox.addEventListener('change', () => {
+            updateSelectedArticles(checkbox, row, quantityInput);
+        });
+
+        quantityInput.addEventListener('input', () => {
+            updateSelectedArticles(checkbox, row, quantityInput);
+        });
+    });
+
+    function updateSelectedArticles(checkbox, row, quantityInput) {
+        const productName = row.children[1].innerText;
+        const productPrice = parseFloat(row.children[2].innerText);
+        const quantity = parseInt(quantityInput.value || 0);
+
+        let existingRow = Array.from(selectedArticlesTable.children).find(selectedRow => 
+            selectedRow.dataset.productName === productName
+        );
+
+        if (checkbox.checked && quantity > 0) {
+            if (!existingRow) {
+                const newRow = document.createElement('tr');
+                newRow.dataset.productName = productName;
+                newRow.innerHTML = `
+                    <td>${productName}</td>
+                    <td class="selected-quantity">${quantity}</td>
+                    <td class="selected-total">${(productPrice * quantity).toFixed(2)} €</td>
+                `;
+                selectedArticlesTable.appendChild(newRow);
+            } else {
+                existingRow.querySelector('.selected-quantity').innerText = quantity;
+                existingRow.querySelector('.selected-total').innerText = (productPrice * quantity).toFixed(2) + " €";
+            }
+        } else if (existingRow) {
+            selectedArticlesTable.removeChild(existingRow);
+        }
+    }
+</script>

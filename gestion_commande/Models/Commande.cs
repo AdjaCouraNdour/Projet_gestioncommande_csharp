@@ -25,7 +25,7 @@ namespace gestion_commande.Models
     
         public virtual ICollection<Detail> Details { get;set;} = new List<Detail>();
         public virtual ICollection<Paiement> Paiements { get;} = new List<Paiement>();
-        public virtual ICollection<ProduitCommande> ProduitsCommande { get;} = new List<ProduitCommande>();
+        public virtual ICollection<ProduitCommande> ProduitsCommande { get; set;} = new List<ProduitCommande>();
 
 
     }

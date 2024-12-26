@@ -26,6 +26,7 @@ namespace gestion_commande.Controllers
         {
             // Fetch clients from the service
             var clients = await _clientService.GetClientsByPaginate(page, pageSize);
+            
             // Pass the clients to the view
             return View(clients);
         }

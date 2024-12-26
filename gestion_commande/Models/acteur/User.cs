@@ -5,7 +5,7 @@ using gestion_commande.Validator;
 
 namespace gestion_commande.Models
 {
-    public class User:AbstractEntity
+    public class User : AbstractEntity 
     {
        public User()
         {

@@ -27,7 +27,7 @@ namespace gestion_commande.Models
 
         public EtatProduit EtatProduit { get ; set ; }
         public virtual ICollection<Detail> Details { get;} = new List<Detail>();
-        public virtual ICollection<ProduitCommande> ProduitsCommande { get;} = new List<ProduitCommande>();
+        public virtual ICollection<ProduitCommande> ProduitsCommande { get; set;} = new List<ProduitCommande>();
 
     }
 }

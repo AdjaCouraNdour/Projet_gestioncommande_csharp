@@ -1,64 +1,46 @@
 ﻿@using gestion_commande.Core
 @using gestion_commande.Models
-@model PaginationModel<Client>
+@model PaginationModel<Commande>
 @{
-    ViewData["Title"] = "Liste des Clients";
+    ViewData["Title"] = "Liste des Commandes";
 }
 
 <div class="container mx-auto mt-6">
     <table class="min-w-full bg-white mb-4 border border-gray-300 rounded-lg">
-        <div class="flex justify-between items-center mb-4">
-            <div class="text-lg font-bold">
-                Liste des clients
-            </div>
-            <div>
-                <a class="bg-white text-white text-sm px-4 py-2 rounded-lg hover:bg-gray-700" asp-action="FormClient">
-                    + client
-                </a>
-            </div>
-            @if (TempData["Message"] != null)
-            {
-                <div class="bg-bleugris border border-white text-white p-4 rounded-lg" role="alert">
-                    <p class="mb-2">@TempData["Message"]</p>
-                </div>
-            }
-        </div>
-
         <thead>
-            <tr class="bg-bleugris text-white">
-                <th class="py-2 px-4 border-b text-left">Login/Username</th>
-                <th class="py-2 px-4 border-b text-left">Téléphone</th>
-                <th class="py-2 px-4 border-b text-left">Adresse</th>
-                <th class="py-2 px-4 border-b">Actions</th>
+            <tr class="bg-bleugris">
+                <th class="py-2 px-4 border-b text-white text-left">Montant</th>
+                <th class="py-2 px-4 border-b text-white text-left">Due</th>
+                <th class="py-2 px-4 border-b text-white text-left">Restant</th>
+                <th class="py-2 px-4 border-b text-white text-left">Id Due Client</th>
+                <th class="py-2 px-4 border-b text-white">Actions</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var client in Model.Items)
+            @foreach (var commande in Model.Items)
             {
-                <tr class="hover:bg-gray-100">
-                    <td class="py-2 px-4 text-black border-b">@client.User?.Login</td>
-                    <td class="py-2 px-4 text-black border-b">@client.User?.Telephone</td>
-                    <td class="py-2 px-4 text-black border-b">@client.User?.Address</td>
+                <tr class="bg-nude hover:bg-gray-100">
+                    <td class="py-2 px-4 border-b">@commande.Montant</td>
+                    <td class="py-2 px-4 border-b">@commande.MontantRestant</td>
+                    <td class="py-2 px-4 border-b">@commande.MontantVerse</td>
+                    <td class="py-2 px-4 border-b">@commande.ClientId</td>
                     <td class="py-2 px-4 border-b text-center">
                         <div class="flex justify-center items-center space-x-4">
                             <!-- Icône Détails -->
-                            <a href="@Url.Action("DetailsClient", "Client", new { id = client.Id })" class="text-bleugris hover:text-gray-700">
+                            <a href="@Url.Action("Details", "Commande", new { id = commande.Id })" class="text-red-500 hover:text-gray-700">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
                                     <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 0 1 .67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 1 1-.671-1.34l.041-.022ZM12 9a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z" clip-rule="evenodd" />
                                 </svg>
                             </a>
 
                             <!-- Icône Supprimer -->
-                            <a href="@Url.Action("Delete", "Client", new { id = client.Id })" class="text-gray-500 hover:text-red-600" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce client ?');">
+                            <a href="@Url.Action("Delete", "Commande", new { id = commande.Id })" class="text-gray-500 hover:text-red-600" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce client ?');">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
                                     <path fill-rule="evenodd" d="M16.5 4.478v.227a48.816 48.816 0 0 1 3.878.512.75.75 0 1 1-.256 1.478l-.209-.035-1.005 13.07a3 3 0 0 1-2.991 2.77H8.084a3 3 0 0 1-2.991-2.77L4.087 6.66l-.209.035a.75.75 0 0 1-.256-1.478A48.567 48.567 0 0 1 7.5 4.705v-.227c0-1.564 1.213-2.9 2.816-2.951a52.662 52.662 0 0 1 3.369 0c1.603.051 2.815 1.387 2.815 2.951Zm-6.136-1.452a51.196 51.196 0 0 1 3.273 0C14.39 3.05 15 3.684 15 4.478v.113a49.488 49.488 0 0 0-6 0v-.113c0-.794.609-1.428 1.364-1.452Zm-.355 5.945a.75.75 0 1 0-1.5.058l.347 9a.75.75 0 1 0 1.499-.058l-.346-9Zm5.48.058a.75.75 0 1 0-1.498-.058l-.347 9a.75.75 0 0 0 1.5.058l.345-9Z" clip-rule="evenodd" />
                                 </svg>
                             </a>
+                
 
-                            <!-- Bouton Commandes -->
-                            <a href="@Url.Action("CommandesClient", "Commande", new { clientId  = client.Id })" class="bg-bleugris text-white text-sm px-4 rounded-lg hover:bg-gray-700">
-                                Commandes
-                            </a>
                         </div>
                     </td>
                 </tr>
@@ -66,12 +48,11 @@
             @if (!Model.Items.Any())
             {
                 <tr>
-                    <td colspan="4" class="py-2 px-4 text-center text-gray-500">Aucun client trouvé.</td>
+                    <td colspan="4" class="py-2 px-4 text-center">Aucune commande trouvée.</td>
                 </tr>
             }
         </tbody>
     </table>
-
     <!-- Pagination -->
     <div class="flex justify-end mt-4">
         <nav aria-label="Page navigation">
@@ -109,5 +90,48 @@
             </ul>
         </nav>
     </div>
-
 </div>
+@section Scripts {
+   <script>
+    // Fonction pour gérer les clics sur les boutons "Refuser"
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.refuse-button').forEach(button => {
+            button.addEventListener('click', async (event) => {
+                event.preventDefault();
+
+                // Récupérer l'identifiant de la commande
+                const commandeId = button.getAttribute('data-commande-id');
+
+                if (!confirm('Êtes-vous sûr de vouloir refuser cette commande ?')) {
+                    return; // Annule l'action si l'utilisateur ne confirme pas
+                }
+
+                try {
+                    // Envoie de la requête au serveur pour refuser la commande
+                    const response = await fetch(`/commande/Refuse`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ commandeId }),
+                    });
+
+                    if (response.ok) {
+                        // Suppression de la ligne correspondante dans le tableau
+                        const row = button.closest('tr');
+                        row.parentNode.removeChild(row);
+
+                        alert('La commande a été refusée avec succès.');
+                    } else {
+                        const errorMessage = await response.text();
+                        alert(`Erreur: ${errorMessage}`);
+                    }
+                } catch (error) {
+                    console.error('Erreur lors du traitement:', error);
+                    alert("Une erreur s'est produite. Veuillez réessayer.");
+                }
+            });
+        });
+    });
+</script>
+}

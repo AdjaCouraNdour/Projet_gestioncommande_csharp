@@ -10,11 +10,12 @@ namespace gestion_commande.Services
     public class CommandeService : ICommandeService
     {
         private readonly ApplicationDbContext _context;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        // Injecter le contexte de la base de données dans le service
-        public CommandeService(ApplicationDbContext context)
+        public CommandeService(ApplicationDbContext context, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
+            _httpContextAccessor = httpContextAccessor;
         }
         
         public IEnumerable<Commande> GetCommandes()
@@ -71,36 +72,50 @@ namespace gestion_commande.Services
 
        public async Task<Commande> Create(int clientId, Commande Commande)
         {
-            // Récupérer le client pour valider qu'il existe
             var client = await _context.Clients.FindAsync(clientId);
             if (client == null)
             {
-                // Si le client n'existe pas, vous pouvez gérer l'erreur ici (par exemple, lever une exception ou retourner null)
                 throw new Exception("Client non trouvé.");
             }
-
-            // Associer la Commande au client
             Commande.ClientId = clientId;
-            Commande.Client = client; // Si la relation entre Commande et Client est définie
-
-            // Ajouter la Commande au contexte
+            Commande.Client = client; 
             _context.Commandes.Add(Commande);
-
-            // Sauvegarder les modifications dans la base de données
             await _context.SaveChangesAsync();
 
-            return Commande; // Retourner la Commande créée
+            return Commande; 
         }
 
-        public Task<Commande> Create(Commande data)
+  
+         public async Task<Commande> Create(Commande commande)
         {
-            throw new NotImplementedException();
+            // Ajouter la commande dans le contexte
+            await _context.Commandes.AddAsync(commande);
+
+            // Sauvegarder les changements
+            await _context.SaveChangesAsync();
+
+            return commande;
         }
-        public async Task<PaginationCommandeModel> GetCommandesClientByPaginate(int clientId, int page, int pageSize)
+
+         public async Task<PaginationModel<Commande>> GetCommandesByPaginate(int page, int pageSize)
         {
-            var commandes = _context.Commandes.Where(commande => commande.ClientId == clientId).AsQueryable<Commande>();
-            var client = await _context.Clients.SingleAsync<Client>(client => client.Id == clientId)!;
+            var commandes = _context.Commandes
+                .Include(d => d.Client) 
+                .AsQueryable();
+
+            return await PaginationModel<Commande>.Paginate(commandes, pageSize, page);
+        }
+        public async Task<PaginationModel<Commande>> GetCommandesClientByPaginate(int clientId, int page, int pageSize)
+        {
+            var commandes = _context.Commandes.Where(commande => commande.ClientId == clientId).AsQueryable();
+            var client = await _context.Clients.SingleOrDefaultAsync(client => client.Id == clientId);
             return await PaginationCommandeModel.PaginateCommande(commandes, pageSize, page, client);
         }
+
+        // public Task<Commande> Create(Commande data)
+        // {
+        //     throw new NotImplementedException();
+        // }
     }
 }
+

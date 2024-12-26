@@ -16,7 +16,7 @@ module.exports = {
         bleugris:'#577C92',
         bleugrisclair:'#8FBBD3',
         vertgris:'#415C6B',
-        pink:'#E1425C',
+        pinker:'#E1425C',
         bluenight : '#040B40', 
         red:{
           500:'#4A0013'

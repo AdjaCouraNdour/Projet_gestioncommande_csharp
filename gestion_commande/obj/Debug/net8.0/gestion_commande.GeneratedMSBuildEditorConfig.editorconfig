@@ -26,6 +26,10 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Users\KIKI\Documents\ISM L3\exam\C#\gestion_commande
 build_property._RazorSourceGeneratorDebug = 
 
+[C:/Users/KIKI/Documents/ISM L3/exam/C\#/gestion_commande/Views/Authentification/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXV0aGVudGlmaWNhdGlvblxMb2dpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/KIKI/Documents/ISM L3/exam/C\#/gestion_commande/Views/Client/DetailsClient.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50XERldGFpbHNDbGllbnQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -34,12 +38,28 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50XERldGFpbHNDb21tYW5kZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/KIKI/Documents/ISM L3/exam/C\#/gestion_commande/Views/Client/FormClientVal.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50XEZvcm1DbGllbnRWYWwuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/KIKI/Documents/ISM L3/exam/C\#/gestion_commande/Views/Client/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50XEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/KIKI/Documents/ISM L3/exam/C\#/gestion_commande/Views/Commande/CommandesClient.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tbWFuZGVcQ29tbWFuZGVzQ2xpZW50LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/KIKI/Documents/ISM L3/exam/C\#/gestion_commande/Views/Commande/DetailsCommande.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tbWFuZGVcRGV0YWlsc0NvbW1hbmRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/KIKI/Documents/ISM L3/exam/C\#/gestion_commande/Views/Commande/FormCommande.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tbWFuZGVcRm9ybUNvbW1hbmRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/KIKI/Documents/ISM L3/exam/C\#/gestion_commande/Views/Commande/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tbWFuZGVcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/KIKI/Documents/ISM L3/exam/C\#/gestion_commande/Views/Commande/TraiterCommande.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29tbWFuZGVcVHJhaXRlckNvbW1hbmRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/KIKI/Documents/ISM L3/exam/C\#/gestion_commande/Views/Home/Index.cshtml]
@@ -84,10 +104,6 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/KIKI/Documents/ISM L3/exam/C\#/gestion_commande/Views/User/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxJbmRleC5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/KIKI/Documents/ISM L3/exam/C\#/gestion_commande/Views/User/Login.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxMb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/KIKI/Documents/ISM L3/exam/C\#/gestion_commande/Views/_ViewImports.cshtml]

@@ -14,44 +14,13 @@ namespace gestion_commande.Controllers
     public class UserController : Controller
     {
         private readonly ApplicationDbContext _context;
-
         private readonly IUserService _userService;
     
         public UserController(IUserService userService,ApplicationDbContext context)
         {
             _userService = userService;
             _context = context;
-        }
-        
-        [HttpGet]
-        public IActionResult Login()
-        {
-            return View();
-        }
-
-        [HttpPost]
-      public IActionResult Login(string login, string password)
-        {
-            if (string.IsNullOrEmpty(login) || string.IsNullOrEmpty(password))
-            {
-                ViewBag.Message = "Veuillez remplir tous les champs.";
-                return View();
-            }
-            var user = _context.Users.FirstOrDefault(u => u.Login == login && u.Password == password);
-            if (user != null)
-            {
-                ViewBag.Message = "Connexion réussie !";
-                return RedirectToAction("Index", "Produit"); // Redirection vers une autre page
-            }
-            else
-            {
-                ViewBag.Message = "Nom d'utilisateur ou mot de passe incorrect.";
-                return View();
-            }
-        }
-        
-
-        
+        }        
         public async Task<IActionResult> Index(int page = 1, int pageSize = 3)
         {
             // Fetch users from the service

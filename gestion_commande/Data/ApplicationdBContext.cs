@@ -82,15 +82,6 @@ namespace gestion_commande.Data
                 .WithMany(a => a.ProduitsCommande)
                 .HasForeignKey(ad => ad.CommandeId);
 
-            // // Ajout des fixtures
-            // modelBuilder.Entity<Client>().HasData(ClientFixture.GetClients().ToArray());
-            // modelBuilder.Entity<User>().HasData(UserFixture.GetUsers().ToArray());
-            // modelBuilder.Entity<Commande>().HasData(CommandeFixture.GetCommandes().ToArray());
-            // modelBuilder.Entity<Detail>().HasData(DetailFixture.GetDetails().ToArray());
-            // modelBuilder.Entity<Produit>().HasData(ProduitFixture.GetProduits().ToArray());
-            // modelBuilder.Entity<Paiement>().HasData(PaiementFixture.GetPaiements().ToArray());
-            // modelBuilder.Entity<ProduitCommande>().HasData(ProduitCommandeFixture.GetProduitsCommande().ToArray());
-
             base.OnModelCreating(modelBuilder);
         }
     }

@@ -10,6 +10,6 @@ namespace gestion_commande.Services.Interfaces
         IEnumerable<Client> GetClients();
         // Task<Client> FindByUsernameAndTelephone(string username, string telephone);
         Task<PaginationModel<Client>> GetClientsByPaginate(int page, int pageSize);
-
+        Task<Client> FindClientByUserLogin(string userLogin);
     }
 }
