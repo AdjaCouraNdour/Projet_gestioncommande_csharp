@@ -15,9 +15,11 @@ namespace gestion_commande.Models
         public Client Client { get; set; }
         public static int Nbr { get; set; }
         public int ClientId { get; set; }
+        public bool isPayed { get; set; }
         public Commande()
         {
             Date = DateTime.Now;
+            isPayed = false;
             CreateAt = DateTime.Now;
             UpdateAt = DateTime.Now;
         }

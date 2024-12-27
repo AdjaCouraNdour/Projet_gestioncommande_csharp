@@ -3,6 +3,6 @@ namespace gestion_commande.Enums
 {
     public enum EtatCommande
     {
-        EnAttente,Valide,Encours,Payée
+        EnAttente,Valide,Encours,Recu
     }
 }

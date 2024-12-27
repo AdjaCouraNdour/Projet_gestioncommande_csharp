@@ -140,6 +140,8 @@ namespace gestion_commande.Controllers
             {
                 var commande = await _commandeService.FindById(paiement.CommandeId);
                 ViewBag.commande = commande;
+                commande.isPayed = true;
+                commande.EtatCommande = EtatCommande.Recu;
                 ViewBag.TypePaiement = GetTypePaiementAsSelectList();  // Assurez-vous de rendre la SelectList à nouveau
                 return View(paiement);
             }
