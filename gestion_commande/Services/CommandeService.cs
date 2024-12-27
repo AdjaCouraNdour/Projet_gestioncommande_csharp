@@ -124,6 +124,15 @@ namespace gestion_commande.Services
             throw new NotImplementedException();
         }
 
+        public async Task CommandeDeclarerRecu(Commande commande)
+        {
+            if (commande == null) throw new ArgumentNullException(nameof(commande));
+
+            commande.EtatCommande = EtatCommande.Recu;
+            _context.Commandes.Update(commande);
+            await _context.SaveChangesAsync();
+        }
+        
         public async Task ValiderCommande(Commande commande)
         {
             if (commande == null) throw new ArgumentNullException(nameof(commande));
@@ -132,7 +141,6 @@ namespace gestion_commande.Services
             _context.Commandes.Update(commande);
             await _context.SaveChangesAsync();
         }
-
         public async Task MettreEnAttente(Commande commande)
         {
             if (commande == null) throw new ArgumentNullException(nameof(commande));

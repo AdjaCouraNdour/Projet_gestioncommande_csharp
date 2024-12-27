@@ -20,7 +20,13 @@
         {
         <a href="@Url.Action("FormPaiement", "Paiement", new { id = Model.FirstOrDefault()?.Commande.Id })" class="bg-bleugris text-white text-sm px-4 rounded-lg hover:bg-red-700">
             Payer
-        </a>
+        </a> 
+            <form id="commandeForm" method="post" action="@Url.Action("DeclarerRecu", "commande")">
+                <input type="hidden" name="idCommande" value="@Model.FirstOrDefault()?.Commande.Id" />
+                <button type="submit" class="text-white bg-bleugris py-2 px-4 rounded hover:bg-green-700">
+                    Recu
+                </button>
+            </form>
         }
     </div>
 

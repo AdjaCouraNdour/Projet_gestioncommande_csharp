@@ -204,6 +204,23 @@ namespace gestion_commande.Controllers
 
 
         [HttpPost]
+        public async Task<IActionResult> DeclarerRecu(int idCommande)
+        {
+            // Récupérer la commande et le livreur sélectionné
+            var commande = await _commandeService.FindById(idCommande);
+            
+            if (commande == null)
+            {
+                return NotFound();
+            }
+            _commandeService.CommandeDeclarerRecu(commande);
+            await _commandeService.Update(commande);
+            _commandeService.ValiderCommande(commande);
+            TempData["Message"] = "Commande est declarer recu mis à jour avec succès!";
+            return RedirectToAction(nameof(Index));  // Rediriger vers la liste des commandes
+        }
+        
+        [HttpPost]
         public async Task<IActionResult> ValiderCommande(int idCommande, int livreurId)
         {
             // Récupérer la commande et le livreur sélectionné

@@ -15,5 +15,7 @@ namespace gestion_commande.Services.Interfaces
         Task<Commande> FindDetailsComdById(int id);
         Task ValiderCommande(Commande commande);
         Task MettreEnAttente(Commande commande);
+        Task CommandeDeclarerRecu(Commande commande);
+
     }
 }
